@@ -1,0 +1,16 @@
+{% extends "beats/base.html" %}
+{% block content %}
+    <div class="navbar-nav">
+        {% if user.is_authenticated %}
+            <div class="row">
+                <div class="column">
+{#                    <a href="{% url 'products-home' %}">#}
+{#                        <img src="static/images/product.jpg" alt="product" style="width:90%">#}
+{#                    </a>#}
+                </div>
+            </div>
+        {% else %}
+            <h2>Hello! Welcome, please login to continue</h2>
+        {% endif %}
+    </div>
+{% endblock content %}
