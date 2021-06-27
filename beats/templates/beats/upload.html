@@ -1,14 +1,31 @@
 {% extends 'beats/base.html' %}
 
 {% block content %}
+    <div style="margin: 10px">
+        <h2>Test Upload</h2>
+        <form method="post" enctype="multipart/form-data" action={% url 'upload-test' %}>
+            {% csrf_token %}
+            <input type="file" name="document">
+            <button type="submit">Upload</button>
+        </form>
+    </div>
 
-    <h2>Upload</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="document">
-        <button type="submit">Upload file</button>
-    </form>
-    {% if url %}
-        <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
-    {% endif %}
+    <div style="margin: 10px">
+        <h2>Upload City Shapefile</h2>
+        <form method="post" enctype="multipart/form-data" action={% url 'upload-shapefile' %}>
+            {% csrf_token %}
+            <input type="file" name="document">
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+
+    <div style="margin: 10px">
+        <h2>Upload City Crime dataset</h2>
+        <form method="post" enctype="multipart/form-data" action={% url 'upload-crime-data' %}>
+            {% csrf_token %}
+            <input type="file" name="document">
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+
 {% endblock %}
