@@ -2,12 +2,12 @@ from storages.backends.s3boto3 import S3Boto3Storage
 
 
 class ShapefileStorage(S3Boto3Storage):
-    bucket_name = 'city-shapefiles'
+    bucket_name = 'sb-city-shapefiles'
 
 
 class CrimeDataStorage(S3Boto3Storage):
-    bucket_name = 'city-crime-data'
+    bucket_name = 'sb-city-crime-data'
 
 
 class TestDataStorage(S3Boto3Storage):
-    bucket_name = 'dryrun-xplod'
+    bucket_name = 'dryrun-test'
