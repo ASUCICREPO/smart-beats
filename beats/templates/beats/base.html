@@ -37,17 +37,23 @@
 </header>
 
 <main role="main" class="container">
-    <div class="row">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-12">
+            <div class="card mb-4">
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
 
-        {# Add block content below   #}
-        {% block content %}{% endblock %}
+                    {# Add block content below   #}
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 
