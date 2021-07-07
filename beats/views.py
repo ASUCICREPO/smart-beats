@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from .forms import CityForm
 from .models import City
+from .utils import *
+
+logger = init_logger(__name__)
 
 
 def home(request):
@@ -9,10 +12,15 @@ def home(request):
 
 def upload(request):
     if request.method == 'POST':
+        logger.info("Uploading city data")
         form = CityForm(request.POST, request.FILES)
 
         if form.is_valid():
+            data = form.cleaned_data
+            logger.info(f"City: {data['city']}, {data['state']} in {data['country']}")
+
             form.save()
+            logger.info("Upload complete")
             return redirect('beats_list')
     else:
         form = CityForm()

@@ -14,33 +14,4 @@
             <button class="btn btn-outline-primary" type="submit">Upload</button>
         </div>
     </form>
-
-
-    {#    <div style="margin: 10px">#}
-    {#        <h2>Test Upload</h2>#}
-    {#        <form method="post" c action={% url 'upload-test' %}>#}
-    {#            {% csrf_token %}#}
-    {#            <input type="file" name="document">#}
-    {#            <button type="submit">Upload</button>#}
-    {#        </form>#}
-    {#    </div>#}
-    {##}
-    {#    <div style="margin: 10px">#}
-    {#        <h2>Upload City Shapefile</h2>#}
-    {#        <form method="post" enctype="multipart/form-data" action={% url 'upload-shapefile' %}>#}
-    {#            {% csrf_token %}#}
-    {#            <input type="file" name="document">#}
-    {#            <button type="submit">Upload</button>#}
-    {#        </form>#}
-    {#    </div>#}
-    {##}
-    {#    <div style="margin: 10px">#}
-    {#        <h2>Upload City Crime dataset</h2>#}
-    {#        <form method="post" enctype="multipart/form-data" action={% url 'upload-crime-data' %}>#}
-    {#            {% csrf_token %}#}
-    {#            <input type="file" name="document">#}
-    {#            <button type="submit">Upload</button>#}
-    {#        </form>#}
-    {#    </div>#}
-
 {% endblock %}
