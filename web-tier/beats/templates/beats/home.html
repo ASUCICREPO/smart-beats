@@ -1,5 +1,31 @@
 {% extends 'beats/base.html' %}
 {% block content %}
     <h2>Welcome to Smartbeats Generator</h2>
-    <a href={% url 'upload' %}>Generate</a>
+    <p>
+        <a href="{% url 'upload' %}" class="btn btn-primary">Generate New Beats</a>
+    </p>
+
+    {% if cities %}
+        <table class="table mb-0">
+            <thead>
+            <tr>
+                <th>City</th>
+                <th>State</th>
+                <th>Country</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for city in cities %}
+                <tr>
+                    <td>{{ city.city }}</td>
+                    <td>{{ city.state }}</td>
+                    <td>{{ city.country }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3>Beats data unavailable</h3>
+    {% endif %}
+
 {% endblock content %}

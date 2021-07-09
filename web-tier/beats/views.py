@@ -7,7 +7,8 @@ logger = init_logger(__name__)
 
 
 def home(request):
-    return render(request, 'beats/home.html')
+    cities = City.objects.all()
+    return render(request, 'beats/home.html', {'cities': cities})
 
 
 def upload(request):
@@ -26,6 +27,10 @@ def upload(request):
         form = CityForm()
 
     return render(request, 'beats/upload.html', {'form': form})
+
+
+def coming_soon(request):
+    return render(request, 'beats/coming_soon.html')
 
 
 def beats_list(request):

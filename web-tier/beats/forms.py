@@ -6,4 +6,4 @@ from .models import City
 class CityForm(forms.ModelForm):
     class Meta:
         model = City
-        fields = ('city', 'state', 'country', 'shape_file', 'crime_data')
+        fields = ('city', 'state', 'country', 'city_shapefile', 'crime_data')
