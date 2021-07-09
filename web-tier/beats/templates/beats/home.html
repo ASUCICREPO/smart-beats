@@ -12,6 +12,7 @@
                 <th>City</th>
                 <th>State</th>
                 <th>Country</th>
+                <th>Beats</th>
             </tr>
             </thead>
             <tbody>
@@ -20,6 +21,7 @@
                     <td>{{ city.city }}</td>
                     <td>{{ city.state }}</td>
                     <td>{{ city.country }}</td>
+                    <td><a href="{% url 'city_map'  city.id  %}" class="btn btn-success">Show Map</a></td>
                 </tr>
             {% endfor %}
             </tbody>

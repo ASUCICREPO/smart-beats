@@ -29,12 +29,18 @@ def upload(request):
     return render(request, 'beats/upload.html', {'form': form})
 
 
-def coming_soon(request):
-    return render(request, 'beats/coming_soon.html')
-
-
 def beats_list(request):
     cities = City.objects.all()
     return render(request, 'beats/beats_list.html', {
         'cities': cities
     })
+
+
+def coming_soon(request):
+    return render(request, 'beats/coming_soon.html')
+
+
+def city_map(request, obj_id=None):
+    city_obj = City.objects.get(id=obj_id)
+
+    return render(request, 'beats/city_map.html', {'city_obj': city_obj})
