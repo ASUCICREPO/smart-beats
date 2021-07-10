@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import CityForm
 from .models import City
-from .utils import *
+from .utils import init_logger, get_shapefile_gdf
 
 logger = init_logger(__name__)
 
@@ -42,5 +42,9 @@ def coming_soon(request):
 
 def city_map(request, obj_id=None):
     city_obj = City.objects.get(id=obj_id)
+    # print(f'City shapefile url: {city_obj.city_shapefile.url}')
+    #
+    # city_gdf = get_shapefile_gdf(city_obj)
+    # city_gdf.plot(figsize=(20, 20), column='ZONE_ID')
 
     return render(request, 'beats/city_map.html', {'city_obj': city_obj})
