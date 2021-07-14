@@ -6,7 +6,7 @@ class City(models.Model):
     state = models.CharField(max_length=255)
     country = models.CharField(max_length=255)
     city_shapefile = models.FileField(upload_to='city_shapefiles/')
-    # beats_shapefile = models.FileField(upload_to='beat_shapefiles/', null=True, blank=True)
+    beats_shapefile = models.FileField(upload_to='beat_shapefiles/', null=True, blank=True)
     beats_img = models.ImageField(upload_to='city_beats/')
     cfs_chart_img = models.ImageField(upload_to='city_cfs_chart/')
     crime_data = models.FileField(upload_to='city_crime_ds/')
