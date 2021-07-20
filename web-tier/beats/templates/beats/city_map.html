@@ -1,0 +1,11 @@
+{% extends 'beats/base.html' %}
+
+{% block content %}
+    <h3>{{ city_obj.city }}, {{ city_obj.state }} in {{ city_obj.country }}</h3>
+    <div>
+        <img src="{{ city_obj.beats_img.url }}" alt="{{ city_obj.city }}" style="width:1000px;height:600px;">
+        <br>
+        <img src="{{ city_obj.cfs_chart_img.url }}" alt="{{ city_obj.city }}" style="width:1000px;height:400px;">
+    </div>
+
+{% endblock %}

@@ -1,4 +1,12 @@
 import logging
+import boto3
+import geopandas as gpd
+import folium
+from folium import Choropleth
+
+s3_resource = boto3.resource('s3')
+s3_client = boto3.client('s3')
+AWS_STORAGE_BUCKET_NAME = 'smart-beats-cic'
 
 
 # Logging
@@ -13,3 +21,55 @@ def init_logger(name):
         datefmt='%Y-%m-%d %H:%M:%S',
     )
     return logger
+
+
+def create_beats_map(cityshapefile_url):
+    # beats_gpd = gpd.read_file(city_obj.city_shapefile.url)
+    beats_gpd = gpd.read_file(cityshapefile_url)
+    beats_gpd = beats_gpd[['ZONE_ID', 'geometry', 'count']]
+
+    beats = beats_gpd.dissolve(by='ZONE_ID', aggfunc='sum')
+    beats['beat_no'] = beats.index
+
+    beatmap = folium.Map(location=[33.548264, -112.191696], zoom_start=11)
+
+    Choropleth(geo_data=beats,
+               data=beats,
+               columns=['beat_no', 'count'],
+               key_on="feature.properties.beat_no",
+               fill_color='YlGnBu',
+               legend_name='Calls For Service count'
+               ).add_to(beatmap)
+
+    style_function = lambda x: {'fillColor': '#ffffff',
+                                'color': '#000000',
+                                'fillOpacity': 0.1,
+                                'weight': 0.1}
+    highlight_function = lambda x: {'fillColor': '#000000',
+                                    'color': '#000000',
+                                    'fillOpacity': 0.50,
+                                    'weight': 0.1}
+
+    tt_overlay = folium.features.GeoJson(
+        beats,
+        style_function=style_function,
+        control=False,
+        highlight_function=highlight_function,
+        tooltip=folium.features.GeoJsonTooltip(
+            fields=['beat_no', 'count'],
+            aliases=['Beat No: ', 'Calls for Service count: '],
+            style="background-color: white; color: #333333; font-family: arial; font-size: 12px; padding: 10px;"
+        )
+    )
+
+    beatmap.add_child(tt_overlay)
+    beatmap.keep_in_front(tt_overlay)
+    folium.LayerControl().add_to(beatmap)
+
+    # beatmap.save(f'{city_obj.city}_beats_map.html')
+    beatmap.save('templates/beats/glendale_beats_map.html')
+
+
+if __name__ == '__main__':
+    create_beats_map(
+        'https://smart-beats-cic.s3.amazonaws.com/beat_shapefiles/glendale_beats.zip?AWSAccessKeyId=AKIA4HP5ECZTFDB6XMED&Signature=J0EcINH3CvWeRkpT%2Bavtk7wv0Kk%3D&Expires=1626247081')
