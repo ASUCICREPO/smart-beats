@@ -1,8 +1,8 @@
 {% extends 'beats/base.html' %}
 {% block content %}
-    <h2>Welcome to Smartbeats Generator</h2>
+    <h2>Welcome to Smartbeats</h2>
     <p>
-        <a href="{% url 'upload' %}" class="btn btn-primary">Generate New Beats</a>
+        <a href="{% url 'upload' %}" class="btn btn-warning">Upload New City</a>
     </p>
 
     {% if cities %}
@@ -12,7 +12,8 @@
                 <th>City</th>
                 <th>State</th>
                 <th>Country</th>
-                <th>Beats</th>
+                <th>Show old Beats</th>
+                <th>Create New Beats</th>
             </tr>
             </thead>
             <tbody>
@@ -21,7 +22,8 @@
                     <td>{{ city.city }}</td>
                     <td>{{ city.state }}</td>
                     <td>{{ city.country }}</td>
-                    <td><a href="{% url 'city_map'  city.id  %}" class="btn btn-success">Show Map</a></td>
+                    <td><a href="{% url 'city_map'  city.id  %}" class="btn btn-success">Show</a></td>
+                    <td><a href="{% url 'generate_beats' %}" class="btn btn-primary">Create</a></td>
                 </tr>
             {% endfor %}
             </tbody>

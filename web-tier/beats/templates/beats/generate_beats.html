@@ -1,0 +1,13 @@
+{% extends 'beats/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container py-5">
+	<h3>Generate New Beats</h3>
+	<form method="post">
+    	{% csrf_token %}
+        {{form|crispy}}
+         <button class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock content %}
