@@ -1,5 +1,7 @@
 beat_name = 'beat_name'
 output_path = 'data/output'
+output_s3_bucket_name = 'smart-beats-cic'
+s3_beats_dir_name = 'beat_shapefiles'
 input_shapefile_path = 'input_shapefile_path'
 output_features = 'output_features'
 zone_creation_method = 'zone_creation_method'
