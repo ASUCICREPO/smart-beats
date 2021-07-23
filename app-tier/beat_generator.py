@@ -5,15 +5,18 @@ from collections import defaultdict
 
 
 def create_beats():
-    args = defaultdict()
+    args = defaultdict(lambda: None)
 
-    for arg in sys.argv[1].split('<sep>'):
-        key, value = arg.split('=')
+    for arg in sys.argv[1].split('<sep1>'):
+        key, value = arg.split('<sep2>')
         args[key] = value
 
     print(args)
 
     arcpy.env.workspace = "arcgis-workspace/arcgis-workspace.gdb"
+
+    print(f"spatial constraints: {args[c.spatial_constraints]}")
+    print(f"Number of zones: {args[c.number_of_zones]}, spatial constraints: {args[c.spatial_constraints]}")
 
     # arcpy.stats.BuildBalancedZones("data/input/census_wise_crime_counts.shp",
     #                                f"data/output/{args[c.beat_name]}",
