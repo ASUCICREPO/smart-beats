@@ -4,7 +4,10 @@ from .forms import CityForm, BeatGenerateForm
 from .models import City
 from .utils import init_logger
 
+import requests
+
 logger = init_logger(__name__)
+url = "http://ec2-54-237-0-51.compute-1.amazonaws.com:5000"
 
 
 def home(request):
@@ -31,24 +34,23 @@ def upload(request):
 
 
 def generate_beats(request):
-    form = BeatGenerateForm()
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = BeatGenerateForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            payload = form.cleaned_data
+            print(f'Generate beat form data: {payload}')
+
+            respose = requests.post(url=url, data=payload)
+            print(f'Http response: {respose}')
+            return respose
+
+    else:
+        form = BeatGenerateForm()
+
     return render(request, 'beats/generate_beats.html', {'form': form})
-    # # if this is a POST request we need to process the form data
-    # if request.method == 'POST':
-    #     # create a form instance and populate it with data from the request:
-    #     form = BeatGenerateForm(request.POST)
-    #     # check whether it's valid:
-    #     if form.is_valid():
-    #         # process the data in form.cleaned_data as required
-    #         # ...
-    #         # redirect to a new URL:
-    #         return HttpResponseRedirect('/thanks/')
-    #
-    # # if a GET (or any other method) we'll create a blank form
-    # else:
-    #     form = BeatGenerateForm()
-    #
-    # return render(request, 'beats/generate_beats.html', {'form': form})
 
 
 def beats_list(request):
