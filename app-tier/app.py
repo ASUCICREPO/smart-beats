@@ -48,8 +48,8 @@ def get_beat_generator_params(request_params):
 
     # Build balanced zones params
     params[s.zone_creation_method] = request_params['beat_creation_method']
-    params[s.zone_building_criteria_target] = f"count {request_params['cfs_per_beat']} 1"
-    params[s.number_of_zones] = request_params['number_of_beats']
+    params[s.zone_building_criteria_target] = f"count {request_params.get('cfs_per_beat', 10000)} 1"
+    params[s.number_of_zones] = request_params.get('number_of_beats', None)
 
     return params
 
