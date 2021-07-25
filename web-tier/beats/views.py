@@ -7,7 +7,8 @@ from .utils import init_logger
 import requests
 
 logger = init_logger(__name__)
-url = "http://ec2-54-237-0-51.compute-1.amazonaws.com:5000"
+url = "http://ec2-54-210-194-250.compute-1.amazonaws.com:5000"
+url_test = "https://httpbin.org/post"
 
 
 def home(request):
@@ -44,7 +45,7 @@ def generate_beats(request):
             print(f'Generate beat form data: {payload}')
 
             respose = requests.post(url=url, data=payload)
-            print(f'Http response: {respose}')
+            print(f'Http response: {respose.text}')
             return respose
 
     else:
