@@ -15,8 +15,9 @@ def create_beats():
 
     arcpy.env.workspace = "arcgis-workspace/arcgis-workspace.gdb"
 
-    print(f"Zone creation method: {args[s.zone_creation_method]}, Number of zones: {args[s.number_of_zones]}, Zone building criteria target: {args[s.zone_building_criteria_target]}")
-    print(f"Zone creation method: {args[s.zone_creation_method]}, Number of zones: {args[s.number_of_zones]}, Zone building criteria target: {args[s.zone_building_criteria_target]}")
+    print(
+        f"Zone creation method: {args[s.zone_creation_method]}, Number of zones: {args[s.number_of_zones]}, Zone "
+        f"building criteria target: {args[s.zone_building_criteria_target]}")
 
     # arcpy.stats.BuildBalancedZones("data/input/census_wise_crime_counts.shp", f"data/output/{args[c.beat_name]}",
     #                                "ATTRIBUTE_TARGET",

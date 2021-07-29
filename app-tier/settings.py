@@ -11,3 +11,4 @@ number_of_beats = 'number_of_beats'
 zone_building_criteria_target = 'zone_building_criteria_target'
 zone_building_criteria = 'zone_building_criteria'
 spatial_constraints = 'spatial_constraints'
+shapefile_components = ['.cpg', '.dbf', '.prj', '.sbn', '.sbx', '.shp', '.shp.xml', '.shx']
