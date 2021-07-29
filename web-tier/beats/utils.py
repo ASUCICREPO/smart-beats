@@ -1,4 +1,7 @@
 import logging
+import os
+from time import sleep
+
 import boto3
 import geopandas as gpd
 import folium
@@ -21,6 +24,13 @@ def init_logger(name):
         datefmt='%Y-%m-%d %H:%M:%S',
     )
     return logger
+
+
+def delete_file(file_path):
+    print(f'Deleting {file_path} after 10 s')
+    sleep(10)
+    if os.path.exists(file_path):
+        os.remove(file_path)
 
 
 def create_beats_map(beats_shapefile_url, beat_prefix):
