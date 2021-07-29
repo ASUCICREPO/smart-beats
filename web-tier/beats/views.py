@@ -42,7 +42,7 @@ def generate_beats(request):
             form = BeatGenerateForm(request.POST)
             if form.is_valid():
                 payload = form.cleaned_data
-                print(f'Generate beat form data: {payload}')
+                print(f'Generate beat from data: {payload}')
 
                 response = requests.post(url=url, data=payload)
 

@@ -5,7 +5,7 @@ from time import sleep
 import boto3
 import geopandas as gpd
 import folium
-from folium import Choropleth
+from folium import Choropleth, DivIcon
 
 s3_resource = boto3.resource('s3')
 s3_client = boto3.client('s3')
@@ -50,6 +50,14 @@ def create_beats_map(beats_shapefile_url, beat_prefix):
                fill_color='YlGnBu',
                legend_name='Calls For Service count'
                ).add_to(beatmap)
+
+    total_beats = beats_gpd['ZONE_ID'].nunique()
+    print(f"Total Number of beats: {total_beats}")
+    loc = f"Total Number of Beats: {total_beats}"
+    title_html = f'''
+                 <h4 align="center" style="font-size:16px"><b>{loc}</b></h4>
+                 '''
+    beatmap.get_root().html.add_child(folium.Element(title_html))
 
     style_function = lambda x: {'fillColor': '#ffffff',
                                 'color': '#000000',
