@@ -23,9 +23,9 @@ def init_logger(name):
     return logger
 
 
-def create_beats_map(cityshapefile_url):
+def create_beats_map(beats_shapefile_url, beat_prefix):
     # beats_gpd = gpd.read_file(city_obj.city_shapefile.url)
-    beats_gpd = gpd.read_file(cityshapefile_url)
+    beats_gpd = gpd.read_file(beats_shapefile_url)
     beats_gpd = beats_gpd[['ZONE_ID', 'geometry', 'count']]
 
     beats = beats_gpd.dissolve(by='ZONE_ID', aggfunc='sum')
@@ -67,9 +67,5 @@ def create_beats_map(cityshapefile_url):
     folium.LayerControl().add_to(beatmap)
 
     # beatmap.save(f'{city_obj.city}_beats_map.html')
-    beatmap.save('templates/beats/glendale_beats_map.html')
 
-
-if __name__ == '__main__':
-    create_beats_map(
-        'https://smart-beats-cic.s3.amazonaws.com/beat_shapefiles/glendale_beats.zip?AWSAccessKeyId=AKIA4HP5ECZTFDB6XMED&Signature=J0EcINH3CvWeRkpT%2Bavtk7wv0Kk%3D&Expires=1626247081')
+    beatmap.save(f'beats/templates/beats/{beat_prefix}.html')

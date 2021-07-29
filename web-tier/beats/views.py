@@ -1,14 +1,14 @@
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .forms import CityForm, BeatGenerateForm
 from .models import City
-from .utils import init_logger
+from .utils import init_logger, create_beats_map
 
 import requests
 
 logger = init_logger(__name__)
 url = "http://ec2-54-210-194-250.compute-1.amazonaws.com:5000"
 url_test = "https://httpbin.org/post"
+AWS_STORAGE_BUCKET_NAME = 'smart-beats-cic'
 
 
 def home(request):
@@ -35,19 +35,25 @@ def upload(request):
 
 
 def generate_beats(request):
-    # if this is a POST request we need to process the form data
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
         form = BeatGenerateForm(request.POST)
-        # check whether it's valid:
         if form.is_valid():
             payload = form.cleaned_data
             print(f'Generate beat form data: {payload}')
 
-            respose = requests.post(url=url, data=payload)
-            print(f'Http response: {respose.text}')
-            return respose
+            response = requests.post(url=url, data=payload)
 
+            status = response.status_code
+            beat_name = response.text
+            print(f'Http response: {status}, Beat name: {beat_name}')
+
+            beat_url = f'zip+s3://{AWS_STORAGE_BUCKET_NAME}/beat_shapefiles/{beat_name}'
+
+            beat_prefix = beat_name.split('.')[0]
+            print(f'beat_url: {beat_url}, beat_prefix: {beat_prefix}')
+            create_beats_map(beat_url, beat_prefix)
+
+            return render(request, f'beats/{beat_prefix}.html')
     else:
         form = BeatGenerateForm()
 
