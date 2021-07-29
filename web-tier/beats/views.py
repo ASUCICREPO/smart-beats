@@ -7,7 +7,6 @@ import requests
 
 logger = init_logger(__name__)
 url = "http://ec2-54-210-194-250.compute-1.amazonaws.com:5000"
-url_test = "https://httpbin.org/post"
 AWS_STORAGE_BUCKET_NAME = 'smart-beats-cic'
 
 
