@@ -11,12 +11,12 @@ def create_beats():
         key, value = arg.split('<=>')
         args[key] = value
 
-    print(args)
+    print(f'Build-balanced zones arguments: {args}')
 
     arcpy.env.workspace = "arcgis-workspace/arcgis-workspace.gdb"
 
-    print(f"spatial constraints: {args[s.spatial_constraints]}")
-    print(f"Number of zones: {args[s.number_of_zones]}, spatial constraints: {args[s.spatial_constraints]}")
+    print(f"Zone creation method: {args[s.zone_creation_method]}, Number of zones: {args[s.number_of_zones]}, Zone building criteria target: {args[s.zone_building_criteria_target]}")
+    print(f"Zone creation method: {args[s.zone_creation_method]}, Number of zones: {args[s.number_of_zones]}, Zone building criteria target: {args[s.zone_building_criteria_target]}")
 
     # arcpy.stats.BuildBalancedZones("data/input/census_wise_crime_counts.shp", f"data/output/{args[c.beat_name]}",
     #                                "ATTRIBUTE_TARGET",
@@ -26,7 +26,7 @@ def create_beats():
 
     arcpy.stats.BuildBalancedZones(args[s.input_shapefile_path], f"data/output/{args[s.beat_name]}",
                                    args[s.zone_creation_method],
-                                   args[s.number_of_zones], f"{args[s.zone_building_criteria_target]}",
+                                   args[s.number_of_zones], args[s.zone_building_criteria_target],
                                    args[s.zone_building_criteria], "CONTIGUITY_EDGES_ONLY", None, None, None, None,
                                    None, '', 100, 50, 0.1, None)
 
