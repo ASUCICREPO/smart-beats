@@ -27,8 +27,8 @@ def init_logger(name):
 
 
 def delete_file(file_path):
-    print(f'Deleting {file_path} after 10 s')
-    sleep(10)
+    print(f'Deleting {file_path} after 60 s')
+    sleep(60)
     if os.path.exists(file_path):
         os.remove(file_path)
 

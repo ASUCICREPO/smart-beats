@@ -76,9 +76,17 @@ WSGI_APPLICATION = 'smartbeats.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # },
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': os.environ['AURORA_DB_NAME'],
+        'USER': os.environ['AURORA_USERNAME'],
+        'PASSWORD': os.environ['AURORA_PASSWORD'],
+        'HOST': os.environ['AURORA_HOSTNAME'],
+        'PORT': os.environ['AURORA_PORT'],
     }
 }
 
