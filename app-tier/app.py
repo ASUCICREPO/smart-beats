@@ -72,8 +72,9 @@ def get_beat_generator_params(request_params):
 
     if params[s.zone_creation_method] == 'ATTRIBUTE_TARGET':
         params[s.zone_building_criteria_target] = f"count {request_params.get('cfs_per_beat', 10000)} 1"
-    elif params[s.zone_creation_method] == 'NUMBER_OF_ZONES':
+    elif params[s.zone_creation_method] == 'NUMBER_ZONES_AND_ATTRIBUTE':
         params[s.number_of_zones] = request_params[s.number_of_beats]
+        params[s.zone_building_criteria] = "count 1"
 
     return params
 
