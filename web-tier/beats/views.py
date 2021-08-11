@@ -1,13 +1,13 @@
+import requests
+import threading
+
 from django.shortcuts import render, redirect
 from .forms import CityForm, BeatGenerateForm
 from .models import City
 from . import utils as u
 
-import requests
-import threading
-
 logger = u.init_logger(__name__)
-url = "http://ec2-54-210-194-250.compute-1.amazonaws.com:5000"
+url = "http://ec2-54-146-66-166.compute-1.amazonaws.com:5000"
 AWS_STORAGE_BUCKET_NAME = 'smart-beats-cic'
 
 
@@ -34,30 +34,38 @@ def upload(request):
     return render(request, 'beats/upload.html', {'form': form})
 
 
-def generate_beats(request):
+def generate_beats(request, obj_id=None):
+    city_obj = City.objects.get(id=obj_id)
+    logger.info(f"city_obj: {city_obj}")
     beat_map_html = None
 
     if request.method == 'POST':
         try:
             form = BeatGenerateForm(request.POST)
+            logger.info(f'Uncleaned form data: {form.data}')
             if form.is_valid():
                 payload = form.cleaned_data
-                print(f'Generate beat from data: {payload}')
+                logger.info(f'Generate beat from data: {payload}')
+
+                polygon_wise_count_shapefile = u.get_filtered_crime_geo_dataframe(payload, city_obj)
+                payload['polygon_wise_count_shapefile'] = polygon_wise_count_shapefile
 
                 response = requests.post(url=url, data=payload)
 
                 status = response.status_code
                 beat_name = response.text
-                print(f'Http response: {status}, Beat name: {beat_name}')
+                logger.info(f'Http response: {status}, Beat name: {beat_name}')
 
                 beat_url = f'zip+s3://{AWS_STORAGE_BUCKET_NAME}/beat_shapefiles/{beat_name}'
 
                 beat_prefix = beat_name.split('.')[0]
-                print(f'beat_url: {beat_url}, beat_prefix: {beat_prefix}')
+                logger.info(f'beat_url: {beat_url}, beat_prefix: {beat_prefix}')
                 u.create_beats_map(beat_url, beat_prefix)
 
                 beat_map_html = f'beats/{beat_prefix}.html'
                 return render(request, beat_map_html)
+            else:
+                logger.info('Well... the form turned out to be invalid')
         finally:
             if beat_map_html:
                 t = threading.Thread(target=u.delete_file, args=(f'beats/templates/{beat_map_html}',))
