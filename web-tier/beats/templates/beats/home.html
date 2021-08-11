@@ -23,7 +23,7 @@
                     <td>{{ city.state }}</td>
                     <td>{{ city.country }}</td>
                     <td><a href="{% url 'city_map'  city.id  %}" class="btn btn-success">Show</a></td>
-                    <td><a href="{% url 'generate_beats' %}" class="btn btn-primary">Create</a></td>
+                    <td><a href="{% url 'generate_beats' city.id %}" class="btn btn-primary">Create</a></td>
                 </tr>
             {% endfor %}
             </tbody>
