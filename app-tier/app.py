@@ -62,7 +62,10 @@ def get_beat_generator_params(request_params):
     params[s.beat_name] = beat_name
 
     # Polygon-wise crime count shapefile location
-    params[s.input_shapefile_path] = 'data/input2/census_wise_crime_counts.shp'
+    pwcc_shapefile_name = request_params['polygon_wise_count_shapefile']
+    u.download_file_from_s3(s.output_s3_bucket_name, pwcc_shapefile_name)
+    pwcc_shapefile_prefix = pwcc_shapefile_name.split('.')[0]
+    params[s.input_shapefile_path] = f'data/input/{pwcc_shapefile_prefix}.shp'
 
     # Build balanced zones params
     params[s.zone_creation_method] = request_params[s.beat_creation_method]
@@ -76,16 +79,6 @@ def get_beat_generator_params(request_params):
 
 
 def create_output_zip_file(beat_name):
-    # with ZipFile(f'{s.output_path}/{beat_name}.zip', 'w') as zip_obj:
-    #     zip_obj.write(f'{s.output_path}/{beat_name}.cpg', f'{beat_name}.cpg')
-    #     zip_obj.write(f'{s.output_path}/{beat_name}.dbf', f'{beat_name}.dbf')
-    #     zip_obj.write(f'{s.output_path}/{beat_name}.prj', f'{beat_name}.prj')
-    #     zip_obj.write(f'{s.output_path}/{beat_name}.sbn', f'{beat_name}.sbn')
-    #     zip_obj.write(f'{s.output_path}/{beat_name}.sbx', f'{beat_name}.sbx')
-    #     zip_obj.write(f'{s.output_path}/{beat_name}.shp', f'{beat_name}.shp')
-    #     zip_obj.write(f'{s.output_path}/{beat_name}.shp.xml', f'{beat_name}.shp.xml')
-    #     zip_obj.write(f'{s.output_path}/{beat_name}.shx', f'{beat_name}.shx')
-
     with ZipFile(f'{s.output_path}/{beat_name}.zip', 'w') as zip_obj:
         for ext in s.shapefile_components:
             zip_obj.write(f'{s.output_path}/{beat_name}{ext}', f'{beat_name}{ext}')

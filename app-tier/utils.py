@@ -1,5 +1,7 @@
 import logging
 import os
+import boto3
+import shutil
 from time import sleep
 
 import settings as s
@@ -28,3 +30,10 @@ def delete_file(file_path):
 
     if os.path.exists(file_path + '.zip'):
         os.remove(file_path + '.zip')
+
+
+def download_file_from_s3(bucket_name, object_name):
+    s3_resource = boto3.resource('s3')
+    s3_resource.Bucket(bucket_name).download_file(f'polygon_wise_count_shapefile/{object_name}', f'data/input/{object_name}')
+    shutil.unpack_archive(f'data/input/{object_name}', f'data/input/')
+
