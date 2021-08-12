@@ -135,3 +135,11 @@ a.article-title:hover {
     margin-top: 0px;
     padding-top: 0px;
 }
+
+.box {
+    margin-bottom: 10px;
+}
+
+.new-select {
+    display: inline-block;
+}
