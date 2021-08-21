@@ -18,19 +18,14 @@ class BeatGenerateForm(forms.ModelForm):
     beat_creation_method = forms.ChoiceField(choices=BEAT_CREATION_CHOICES)
     cfs_per_beat = forms.IntegerField(label='Calls for Service per Beat', required=False)
     number_of_beats = forms.DecimalField(required=False)
-
-    # beat_creation_method = forms.ChoiceField(choices=BEAT_CREATION_CHOICES,
-    #                                          widget=forms.Select(
-    #                                              attrs={'class': 'form-control', 'id': 'beat_creation_method',
-    #                                                     'onclick': 'show_beat_gen_attribute();'}))
-    # cfs_per_beat = forms.IntegerField(label='Calls for Service per Beat', required=False,
-    #                                   widget=forms.NumberInput(attrs={'class': 'form-control', 'id': 'cfs_per_beat'}))
-    # number_of_beats = forms.DecimalField(required=False, widget=forms.NumberInput(
-    #     attrs={'class': 'form-control', 'id': 'number_of_beats'}))
+    start_datetime = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
+    end_datetime = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
 
     class Meta:
         model = Crime
-        fields = ('priority', 'is_incident', 'beat_creation_method', 'cfs_per_beat', 'number_of_beats')
+        fields = (
+            'priority', 'is_incident', 'beat_creation_method', 'cfs_per_beat', 'number_of_beats', 'start_datetime',
+            'end_datetime')
 
     class Media:
         js = ('beats/js/main.js',)

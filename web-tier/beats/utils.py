@@ -1,3 +1,5 @@
+import datetime
+import pytz
 import logging
 import os
 import shutil
@@ -8,8 +10,8 @@ import boto3
 import geopandas as gpd
 import folium
 import pandas as pd
-from folium import Choropleth, DivIcon
-
+from folium import Choropleth
+from django.db.models import Q
 from beats.models import Crime
 
 s3_resource = boto3.resource('s3')
@@ -51,14 +53,22 @@ def get_filtered_crime_geo_dataframe(payload, city_obj):
     priority_list = payload['priority']
     is_incident = payload['is_incident']
 
+    sd = payload['start_datetime']
+    start_datetime = datetime.datetime(sd.year, sd.month, sd.day, tzinfo=pytz.timezone('US/Arizona'))
+    ed = payload['end_datetime']
+    end_datetime = datetime.datetime(ed.year, ed.month, ed.day, tzinfo=pytz.timezone('US/Arizona'))
+
+    query = Q(timestamp__gte=start_datetime) & Q(timestamp__lte=end_datetime)
+
     if priority_list and is_incident:
-        query_res = Crime.objects.filter(priority__in=priority_list, is_incident=is_incident).values()
+        query &= Q(priority__in=priority_list) & Q(is_incident=is_incident)
     elif priority_list:
-        query_res = Crime.objects.filter(priority__in=priority_list).values()
+        query &= Q(priority__in=priority_list)
     elif is_incident:
-        query_res = Crime.objects.filter(is_incident=is_incident).values()
-    else:
-        query_res = Crime.objects.all().values()
+        query &= Q(is_incident=is_incident)
+
+    query_res = Crime.objects.filter(query).values()
+    logger.info(f"Total rows received: {len(query_res)}")
 
     # Fixing crime csv file before join
     crime_gdf = gpd.GeoDataFrame(query_res, columns=['priority', 'geometry', 'geometry_wkt'])
@@ -71,7 +81,7 @@ def get_filtered_crime_geo_dataframe(payload, city_obj):
     # Fixing city shapefile before join
     city_polygons = gpd.read_file(city_obj.city_shapefile)
     city_polygons.crs = 'epsg:4326'
-    city_polygons = city_polygons[['OBJECTID', 'geometry']]
+    city_polygons = city_polygons[['geometry']]
 
     logger.info(f"City shapefile:\n {city_polygons.head()}")
     logger.info(f'Crime gdf info: {city_polygons.dtypes}')
