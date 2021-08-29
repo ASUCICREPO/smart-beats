@@ -36,6 +36,7 @@ class Crime(models.Model):
     is_incident = models.BooleanField()
     geometry_wkt = models.CharField(max_length=100)
     timestamp = models.DateTimeField(null=True, blank=True)
+    disposition = models.IntegerField()
 
     def __str__(self):
         return f"{self.event_number}"

@@ -7,7 +7,7 @@ from .models import City
 from . import utils as u
 
 logger = u.init_logger(__name__)
-url = "http://ec2-54-146-66-166.compute-1.amazonaws.com:5000"
+url = "http://ec2-100-26-151-201.compute-1.amazonaws.com:5000"
 AWS_STORAGE_BUCKET_NAME = 'smart-beats-cic'
 
 
