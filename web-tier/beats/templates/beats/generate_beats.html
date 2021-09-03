@@ -22,6 +22,15 @@
             </div>
 
             <div class="field box">
+                <label class="label">Select Disposition</label>
+                <div class="control">
+                    <div class="select">
+                        {% render_field form.disposition_type id="disposition_type" %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="field box">
                 <label class="label">Beat Creation Method</label>
                 <div class="control">
                     <div class="select">
