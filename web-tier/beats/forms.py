@@ -17,12 +17,12 @@ class BeatGenerateForm(forms.ModelForm):
 
     DISPOSITION_CHOICES = [
         ('initial', 'Select'),
-        (1, 'Field Interview (1)'),
-        (2, 'False Alarm (2)'),
-        (3, 'Unable to locate (3)'),
-        (5, 'Assist Fire Department (5)'),
-        (6, 'Report (6)'),
-        (9, 'Contact made (9)'),
+        (1, '1 - Field Interview'),
+        (2, '2 - False Alarm'),
+        (3, '3 - Unable to locate'),
+        (5, '5 - Assist Fire Department'),
+        (6, '6 - Report'),
+        (9, '9 - Contact made'),
     ]
 
     beat_creation_method = forms.ChoiceField(choices=BEAT_CREATION_CHOICES)
