@@ -26,17 +26,29 @@ class BeatGenerateForm(forms.ModelForm):
     ]
 
     beat_creation_method = forms.ChoiceField(choices=BEAT_CREATION_CHOICES)
+    beat_creation_method.widget.attrs.update(
+        {'class': 'field-margins form-control'})
     disposition_type = forms.ChoiceField(choices=DISPOSITION_CHOICES)
-    cfs_per_beat = forms.IntegerField(label='Calls for Service per Beat', required=False)
+    disposition_type.widget.attrs.update(
+        {'class': 'field-margins form-control'})
+    cfs_per_beat = forms.IntegerField(
+        label='Calls for Service per Beat', required=False)
+    cfs_per_beat.widget.attrs.update({'class': 'field-margins form-control'})
     number_of_beats = forms.DecimalField(required=False)
-    start_datetime = forms.DateTimeField(widget=forms.NumberInput(attrs={'type': 'datetime-local'}))
-    end_datetime = forms.DateTimeField(widget=forms.NumberInput(attrs={'type': 'datetime-local'}))
+    number_of_beats.widget.attrs.update(
+        {'class': 'field-margins form-control'})
+    start_datetime = forms.DateTimeField(
+        widget=forms.NumberInput(attrs={'type': 'datetime-local'}))
+    start_datetime.widget.attrs.update({'class': 'field-margins form-control'})
+    end_datetime = forms.DateTimeField(
+        widget=forms.NumberInput(attrs={'type': 'datetime-local'}))
+    end_datetime.widget.attrs.update({'class': 'field-margins form-control'})
 
     class Meta:
         model = Crime
         fields = (
-            'priority', 'is_incident', 'disposition_type', 'beat_creation_method', 'cfs_per_beat', 'number_of_beats',
-            'start_datetime', 'end_datetime')
+            'priority', 'disposition_type', 'beat_creation_method', 'cfs_per_beat', 'number_of_beats',
+            'start_datetime', 'end_datetime', 'is_incident')
 
     class Media:
         js = ('beats/js/main.js',)

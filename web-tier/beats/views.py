@@ -14,6 +14,7 @@ AWS_STORAGE_BUCKET_NAME = 'smart-beats-cic'
 def home(request):
     cities = City.objects.all()
     return render(request, 'beats/home.html', {'cities': cities})
+    # return render(request, 'beats/base.html')
 
 
 def upload(request):
@@ -73,7 +74,7 @@ def generate_beats(request, obj_id=None):
     else:
         form = BeatGenerateForm()
 
-    return render(request, 'beats/generate_beats.html', {'form': form})
+    return render(request, 'beats/generate_beats_new.html', {'form': form})
 
 
 def beats_list(request):

@@ -2,6 +2,7 @@
 
 <!doctype html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -10,56 +11,60 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'beats/css/main.css' %}">
     <title>Smart-beats</title>
 </head>
+
 <body>
-<header class="site-header">
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container">
-            <a class="navbar-brand mr-4" href="{% url 'home' %}">Smartbeats</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
-                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarToggle">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="#">Generate</a>
-                </div>
-                <!-- Navbar Right Side -->
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-item nav-link" href="#">Login</a>
-                    <a class="nav-item nav-link" href="#">Register</a>
-                </div>
+
+<div class="container-fluid">
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container">
+                <a id="logo" class="navbar-brand mr-4" href="{% url 'home' %}">SmartBeats</a>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="container">
+        <div class="row">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer>
+        <div class="content">
+            <div class="link-boxes">
+                <ul class="box">
+                    <li><a href="#"><img src="{% static 'beats/img/SmartBeats_Logo.png' %}" style="width: 60%;"
+                                         alt=""></a></li>
+                    <li><a href="#">Arizona State University, Cloud Innovation Center</a></li>
+                </ul>
+                <ul class="box">
+                    <li><a href="#">Accessibility</a></li>
+                    <li><a href="#">Security and Privacy</a></li>
+                </ul>
+                <ul class="box">
+                    <li><a href="#">Social Media</a></li>
+                    <li class="media-icons">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                        <a href="#"><i class="fa fa-youtube"></i></a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </nav>
-</header>
+    </footer>
+</div>
 
-<main role="main" class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-10 col-md-12">
-            <div class="card mb-4">
-                <div class="card-body">
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }}">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-
-                    {# Add block content below   #}
-                    {% block content %}{% endblock %}
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
 
 <!-- Optional JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 </body>
+
 </html>

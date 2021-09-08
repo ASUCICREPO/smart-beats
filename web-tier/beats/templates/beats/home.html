@@ -1,35 +1,34 @@
 {% extends 'beats/base.html' %}
+{% load static %}
 {% block content %}
-    <h2>Welcome to Smartbeats</h2>
-    <p>
-        <a href="{% url 'upload' %}" class="btn btn-warning">Upload New City</a>
-    </p>
+    <div class="col-lg-12 col-md-12" style="margin-bottom: 10px;">
+        <img style="width: 100%; height: 400px;" src="{% static 'beats/img/CAR.jpg' %}" alt="Car image">
+    </div>
+    <div class="container landing-page-content">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-md-12">
+                <h2>How is SmartBeats Utilized?</h2>
+                <p>SmartBeats is a software application that supports three functions: the development and
+                    adjustment of deployment areas, the annual shift bidding process and daily shift scheduling.
+                    To use the application, a user will be able to add a data source
+                    and choose the type of beats that they would like to be generated.These options are as follows:</p>
+                <div style="margin-left: 20%;">
+                    <ul>
+                        <li>Priority of Calls for service</li>
+                        <li>Specifiy number of beats to create</li>
+                        <li>Specify number of Calls for service per beat</li>
+                        <li>Show only Calls for service that converted to incidents</li>
+                    </ul>
 
-    {% if cities %}
-        <table class="table mb-0">
-            <thead>
-            <tr>
-                <th>City</th>
-                <th>State</th>
-                <th>Country</th>
-                <th>Show old Beats</th>
-                <th>Create New Beats</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for city in cities %}
-                <tr>
-                    <td>{{ city.city }}</td>
-                    <td>{{ city.state }}</td>
-                    <td>{{ city.country }}</td>
-                    <td><a href="{% url 'city_map'  city.id  %}" class="btn btn-success">Show</a></td>
-                    <td><a href="{% url 'generate_beats' city.id %}" class="btn btn-primary">Create</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <h3>Beats data unavailable</h3>
-    {% endif %}
+                </div>
+                <p>The user will then be tasked to generate the Glendale map after selecting one of the options as
+                    stated above.</p>
+                <div class="justify-content-center" style="display: flex; margin-bottom: 10px;">
+                    <a class="btn btn-danger btn-lg" href="{% url 'beats_list' %}">Get Started</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 {% endblock content %}

@@ -3,75 +3,84 @@
 {% load widget_tweaks %}
 
 {% block content %}
-    <h3>Generate New Beats</h3>
-    <div class="form-group">
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {#            {{ form.as_p }}#}
-            <div class="field box">
-                <label class="label">Priority</label>
-                <div class="control">
-                    {% render_field form.priority %}
-                </div>
-            </div>
-            <div class="field box">
-                <label class="label">Incident</label>
-                <div class="control">
-                    {% render_field form.is_incident %}
-                </div>
-            </div>
-
-            <div class="field box">
-                <label class="label">Select Disposition</label>
-                <div class="control">
-                    <div class="select">
-                        {% render_field form.disposition_type id="disposition_type" %}
+<div class="card">
+    <div class="card-body">
+        <h3>Choose how to generate your beats by filling in at least one of the options</h3>
+        <div class="form-group">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <!-- <div class="field box">
+                    <label class="label">Priority</label>
+                    <div class="control">
+                        {% render_field form.priority %}
                     </div>
                 </div>
-            </div>
-
-            <div class="field box">
-                <label class="label">Beat Creation Method</label>
-                <div class="control">
-                    <div class="select">
-                        {% render_field form.beat_creation_method id="beat_creation_method" onchange="show_beat_gen_attribute();" %}
+                <div class="field box">
+                    <label class="label">Incident</label>
+                    <div class="control">
+                        {% render_field form.is_incident %}
                     </div>
                 </div>
-            </div>
 
-
-            <div class="field box" id="cfs_per_beat">
-                <label class="label">Calls-For-Service Per Beat</label>
-                <div class="control">
-                    {% render_field form.cfs_per_beat %}
+                <div class="field box">
+                    <label class="label">Select Disposition</label>
+                    <div class="control">
+                        <div class="select">
+                            {% render_field form.disposition_type id="disposition_type" %}
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-
-            <div class="field box" id="number_of_beats">
-                <label class="label">Total Number of Beats</label>
-                <div class="control">
-                    {% render_field form.number_of_beats %}
+                <div class="field box">
+                    <label class="label">Beat Creation Method</label>
+                    <div class="control">
+                        <div class="select">
+                            {% render_field form.beat_creation_method id="beat_creation_method"
+                            onchange="show_beat_gen_attribute();" %}
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="field box" id="start_date">
-                <label class="label">Start Date</label>
-                <div class="control">
-                    {% render_field form.start_datetime %}
+
+                <div class="field box" id="cfs_per_beat">
+                    <label class="label">Calls-For-Service Per Beat</label>
+                    <div class="control">
+                        {% render_field form.cfs_per_beat %}
+                    </div>
                 </div>
-            </div>
 
-            <div class="field box" id="end_date">
-                <label class="label">End Date</label>
-                <div class="control">
-                    {% render_field form.end_datetime %}
+
+                <div class="field box" id="number_of_beats">
+                    <label class="label">Total Number of Beats</label>
+                    <div class="control">
+                        {% render_field form.number_of_beats %}
+                    </div>
                 </div>
-            </div>
 
+                <div class="field box" id="start_date">
+                    <label class="label">Start Date</label>
+                    <div class="control">
+                        {% render_field form.start_datetime %}
+                    </div>
+                </div>
 
-            <button class="btn btn-primary">Submit</button>
-        </form>
+                <div class="field box" id="end_date">
+                    <label class="label">End Date</label>
+                    <div class="control">
+                        {% render_field form.end_datetime %}
+                    </div>
+                </div> -->
+
+                <br><br>
+                <div style="display: flex; justify-content: flex-end; margin-top: 10px; margin-bottom: 10px;">
+                    <button class="btn btn-danger btn-lg">Generate</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <script src="{% static 'beats/js/main.js' %}"></script>
+
+</div>
+
+<script src="{% static 'beats/js/main.js' %}"></script>
 {% endblock content %}
