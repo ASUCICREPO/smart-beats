@@ -4,9 +4,9 @@ from django.contrib.gis.db import models as spatial_models
 
 
 class City(models.Model):
-    city = models.CharField(max_length=255)
-    state = models.CharField(max_length=255)
-    country = models.CharField(max_length=255)
+    city = models.CharField(max_length=255, null=True, blank=True)
+    state = models.CharField(max_length=255, null=True, blank=True)
+    country = models.CharField(max_length=255, null=True, blank=True)
     city_shapefile = models.FileField(upload_to='city_shapefiles/')
     polygon_wise_count_shapefile = models.FileField(upload_to='polygon_wise_count_shapefile/', null=True, blank=True)
     beats_shapefile = models.FileField(upload_to='beat_shapefiles/', null=True, blank=True)

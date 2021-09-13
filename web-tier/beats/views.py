@@ -74,7 +74,7 @@ def generate_beats(request, obj_id=None):
     else:
         form = BeatGenerateForm()
 
-    return render(request, 'beats/generate_beats_new.html', {'form': form})
+    return render(request, 'beats/generate_beats.html', {'form': form})
 
 
 def beats_list(request):
