@@ -30,7 +30,7 @@ function show_beat_gen_attribute() {
 }
 
 // DROP ZONE
-let elOne = document.getElementById("div_id_beats_shapefile");
+let elOne = document.getElementById("div_id_city_shapefile");
 let orDiv = document.createElement("div");
 orDiv.innerHTML = "<p style='font-weight:bold'>OR</p>";
 orDiv.style.marginLeft = "40px";
@@ -43,7 +43,7 @@ let newNode = document.createElement("span");
 newNode.innerHTML = "Drop file here or click to upload";
 newNode.classList.add("drop-zone__prompt");
 
-let parentDivOne = document.getElementById("id_beats_shapefile").parentNode;
+let parentDivOne = document.getElementById("id_city_shapefile").parentNode;
 parentDivOne.classList.add("drop-zone");
 parentDivOne.insertBefore(newNode, parentDivOne.firstChild);
 

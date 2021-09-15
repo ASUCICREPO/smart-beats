@@ -5,7 +5,7 @@ from .models import City, Crime
 class CityForm(forms.ModelForm):
     class Meta:
         model = City
-        fields = ('beats_shapefile', 'crime_data')
+        fields = ('city_shapefile', 'crime_data')
 
     def __init__(self, *args, **kwargs) -> None:
         super(CityForm, self).__init__(*args, **kwargs)
