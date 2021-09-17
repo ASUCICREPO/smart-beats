@@ -22,13 +22,25 @@ def upload(request):
         logger.info("Uploading city data")
         form = CityForm(request.POST, request.FILES)
 
-        if form.is_valid():
-            data = form.cleaned_data
-            # logger.info(f"City: {data['city']}, {data['state']} in {data['country']}")
+        if City.objects.filter(city='Glendale').exists():
+            if form.is_valid():
+                data = form.cleaned_data
+                # logger.info(f"City: {data['city']}, {data['state']} in {data['country']}")
+                if data['city_shapefile']:
+                    form.save(update_fields=['city_shapefile'])
+                if data['crime_data']:
+                    form.save(update_fields=['crime_data'])
+                logger.info("Upload complete")
+                return redirect('/generate/1')
+        else:
 
-            form.save()
-            logger.info("Upload complete")
-            return redirect('/generate/1')
+            if form.is_valid():
+                data = form.cleaned_data
+                # logger.info(f"City: {data['city']}, {data['state']} in {data['country']}")
+
+                # form.save()
+                logger.info("Upload complete")
+                return redirect('/generate/1')
     else:
         form = CityForm()
 
