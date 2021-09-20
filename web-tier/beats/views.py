@@ -38,7 +38,7 @@ def upload(request):
                 data = form.cleaned_data
                 # logger.info(f"City: {data['city']}, {data['state']} in {data['country']}")
 
-                # form.save()
+                form.save()
                 logger.info("Upload complete")
                 return redirect('/generate/1')
     else:

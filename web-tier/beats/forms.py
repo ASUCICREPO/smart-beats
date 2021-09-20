@@ -30,24 +30,18 @@ class BeatGenerateForm(forms.ModelForm):
         (9, '9 - Contact made'),
     ]
 
-    beat_creation_method = forms.ChoiceField(choices=BEAT_CREATION_CHOICES)
-    beat_creation_method.widget.attrs.update(
-        {'class': 'field-margins form-control'})
-    disposition_type = forms.ChoiceField(choices=DISPOSITION_CHOICES)
-    disposition_type.widget.attrs.update(
-        {'class': 'field-margins form-control'})
-    cfs_per_beat = forms.IntegerField(
-        label='Calls for Service per Beat', required=False)
-    cfs_per_beat.widget.attrs.update({'class': 'field-margins form-control'})
-    number_of_beats = forms.DecimalField(required=False)
-    number_of_beats.widget.attrs.update(
-        {'class': 'field-margins form-control'})
+    beat_creation_method = forms.ChoiceField(choices=BEAT_CREATION_CHOICES, widget=forms.Select(
+        attrs={'class': 'field-margins form-control'}))
+    disposition_type = forms.ChoiceField(choices=DISPOSITION_CHOICES,
+                                         widget=forms.Select(attrs={'class': 'field-margins form-control'}))
+    cfs_per_beat = forms.IntegerField(label='Calls for Service per Beat', required=False,
+                                      widget=forms.NumberInput(attrs={'class': 'field-margins form-control'}))
+    number_of_beats = forms.DecimalField(required=False,
+                                         widget=forms.NumberInput(attrs={'class': 'field-margins form-control'}))
     start_datetime = forms.DateTimeField(
-        widget=forms.NumberInput(attrs={'type': 'datetime-local'}))
-    start_datetime.widget.attrs.update({'class': 'field-margins form-control'})
+        widget=forms.NumberInput(attrs={'class': 'field-margins form-control', 'type': 'datetime-local'}))
     end_datetime = forms.DateTimeField(
-        widget=forms.NumberInput(attrs={'type': 'datetime-local'}))
-    end_datetime.widget.attrs.update({'class': 'field-margins form-control'})
+        widget=forms.NumberInput(attrs={'class': 'field-margins form-control', 'type': 'datetime-local'}))
 
     class Meta:
         model = Crime
