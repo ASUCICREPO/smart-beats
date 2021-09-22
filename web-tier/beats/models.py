@@ -4,17 +4,15 @@ from django.contrib.gis.db import models as spatial_models
 
 
 class City(models.Model):
-    city = models.CharField(max_length=255)
-    state = models.CharField(max_length=255)
-    country = models.CharField(max_length=255)
+    city = models.CharField(default='Glendale', max_length=255)
+    state = models.CharField(default='Arizona', max_length=255)
+    country = models.CharField(default='USA', max_length=255)
     city_shapefile = models.FileField(upload_to='city_shapefiles/')
     polygon_wise_count_shapefile = models.FileField(upload_to='polygon_wise_count_shapefile/', null=True, blank=True)
-    beats_shapefile = models.FileField(upload_to='beat_shapefiles/', null=True, blank=True)
-    crime_data = models.FileField(upload_to='city_crime_ds/')
+    beats_shapefile = models.FileField(
+        upload_to='beat_shapefiles/', null=True, blank=True)
+    crime_data = models.FileField(upload_to='city_crime_ds/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'{self.city}, {self.state} in {self.country}'
 
     def delete(self, *args, **kwargs):
         self.city_shapefile.delete()
@@ -35,6 +33,8 @@ class Crime(models.Model):
     geometry = spatial_models.PointField()
     is_incident = models.BooleanField()
     geometry_wkt = models.CharField(max_length=100)
+    timestamp = models.DateTimeField(null=True, blank=True)
+    disposition = models.IntegerField()
 
     def __str__(self):
         return f"{self.event_number}"

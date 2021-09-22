@@ -1,28 +1,34 @@
 {% extends 'beats/base.html' %}
-
 {% block content %}
-    <h2>Existing Beats</h2>
-
     <p>
-        <a href="{% url 'upload' %}" class="btn btn-primary">Upload City Data</a>
+        <a href="{% url 'upload' %}" class="btn btn-warning">Upload New City</a>
     </p>
 
-    <table class="table mb-0">
-        <thead>
-        <tr>
-            <th>City</th>
-            <th>State</th>
-            <th>Country</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for city in cities %}
+    {% if cities %}
+        <table class="table mb-0">
+            <thead>
             <tr>
-                <td>{{ city.city }}</td>
-                <td>{{ city.state }}</td>
-                <td>{{ city.country }}</td>
+                <th>City</th>
+                <th>State</th>
+                <th>Country</th>
+                <th>Show old Beats</th>
+                <th>Create New Beats</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-{% endblock %}
+            </thead>
+            <tbody>
+            {% for city in cities %}
+                <tr>
+                    <td>{{ city.city }}</td>
+                    <td>{{ city.state }}</td>
+                    <td>{{ city.country }}</td>
+                    <td><a href="{% url 'city_map'  city.id  %}" class="btn btn-success">Show</a></td>
+                    <td><a href="{% url 'generate_beats' city.id %}" class="btn btn-primary">Create</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3>Beats data unavailable</h3>
+    {% endif %}
+
+{% endblock content %}
