@@ -20,9 +20,9 @@ def init_logger(name):
     return logger
 
 
-def delete_file(file_path):
-    print(f'Deleting output beats file {file_path} after 10s')
-    sleep(10)
+def delete_file(file_path, sleep_time=10):
+    print(f'Deleting output beats file {file_path} after {sleep_time}s')
+    sleep(sleep_time)
 
     for ext in s.shapefile_components:
         if os.path.exists(file_path + ext):
