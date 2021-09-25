@@ -14,7 +14,6 @@ AWS_STORAGE_BUCKET_NAME = 'smart-beats-cic'
 def home(request):
     cities = City.objects.all()
     return render(request, 'beats/home.html', {'cities': cities})
-    # return render(request, 'beats/base.html')
 
 
 def upload(request):
@@ -98,18 +97,3 @@ def beats_list(request):
         'cities': cities
     })
 
-
-def coming_soon(request):
-    return render(request, 'beats/coming_soon.html')
-
-
-def beat_interactive_map(request):
-    return render(request, 'beats/glendale_beats_map.html')
-
-
-def city_map(request, obj_id=None):
-    city_obj = City.objects.get(id=obj_id)
-    if city_obj.city != 'Glendale':
-        return render(request, 'beats/city_map.html', {'city_obj': city_obj})
-
-    return render(request, 'beats/glendale_beats_map.html')

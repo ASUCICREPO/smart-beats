@@ -52,7 +52,7 @@ def upload_file_to_s3(filepath, object_name):
 def get_filtered_crime_geo_dataframe(payload, city_obj):
     priority_list = payload['priority']
     is_incident = payload['is_incident']
-    disposition_type = payload['disposition_type']
+    disposition_types = payload['disposition']
 
     sd = payload['start_datetime']
     start_datetime = datetime.datetime(sd.year, sd.month, sd.day, sd.hour, sd.minute, tzinfo=pytz.timezone('US/Arizona'))
@@ -62,16 +62,15 @@ def get_filtered_crime_geo_dataframe(payload, city_obj):
     # Add check for time range to query
     query = Q(timestamp__gte=start_datetime) & Q(timestamp__lte=end_datetime)
 
-    # Add check for Priority info and incident status to query
-    if priority_list and is_incident:
-        query &= Q(priority__in=priority_list) & Q(is_incident=is_incident)
-    elif priority_list:
+    # Add check for Priority info, disposition and incident status to query
+    if priority_list:
         query &= Q(priority__in=priority_list)
-    elif is_incident:
-        query &= Q(is_incident=is_incident)
 
-    # Add check for Disposition field
-    query &= Q(disposition=disposition_type)
+    if disposition_types:
+        query &= Q(disposition__in=disposition_types)
+
+    if is_incident:
+        query &= Q(is_incident=is_incident)
 
     query_res = Crime.objects.filter(query).values()
     logger.info(f"Total rows received: {len(query_res)}")

@@ -16,18 +16,16 @@
                         </div>
                     </div>
                     <div class="field box">
-                        <label class="label">Is Incident:</label>
+                        <label class="label">Use Incident Data:</label>
                         <div class="control">
                             {% render_field form.is_incident %}
                         </div>
                     </div>
 
                     <div class="field box">
-                        <label class="label">Disposition type:</label>
+                        <label class="label">Disposition Type:</label>
                         <div class="control">
-                            <div class="select">
-                                {% render_field form.disposition_type id="disposition_type" %}
-                            </div>
+                            {% render_field form.disposition id="disposition_type" %}
                         </div>
                     </div>
 
@@ -35,7 +33,6 @@
                         <label class="label">Beat Creation Method:</label>
                         <div class="control">
                             <div class="select">
-{#                                {% render_field form.beat_creation_method id="beat_creation_method" onchange="show_beat_gen_attribute();" %}#}
                                 {% render_field form.beat_creation_method id="beat_creation_method_id" %}
                             </div>
                         </div>
