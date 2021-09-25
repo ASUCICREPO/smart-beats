@@ -67,7 +67,7 @@ def run_build_balanced_zones(n_test=None):
 
 def beats_count_calibrator(n, total_beats_threshold):
     offset = 0
-    trials = 10
+    trials = 20
 
     while trials > 0:
         print(f"Trial number: {trials}")
@@ -78,6 +78,8 @@ def beats_count_calibrator(n, total_beats_threshold):
 
         total_zones = run_build_balanced_zones(n_test)
         error = n - total_zones
+
+        print(f"xx error val: {error} xx")
 
         if error == 0:
             break
