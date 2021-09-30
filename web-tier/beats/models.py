@@ -8,16 +8,11 @@ class City(models.Model):
     state = models.CharField(default='Arizona', max_length=255)
     country = models.CharField(default='USA', max_length=255)
     city_shapefile = models.FileField(upload_to='city_shapefiles/')
-    polygon_wise_count_shapefile = models.FileField(upload_to='polygon_wise_count_shapefile/', null=True, blank=True)
-    beats_shapefile = models.FileField(
-        upload_to='beat_shapefiles/', null=True, blank=True)
     crime_data = models.FileField(upload_to='city_crime_ds/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def delete(self, *args, **kwargs):
         self.city_shapefile.delete()
-        self.polygon_wise_count_shapefile.delete()
-        self.beats_shapefile.delete()
         self.crime_data.delete()
         super().delete(*args, **kwargs)
 
