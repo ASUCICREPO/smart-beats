@@ -12,7 +12,7 @@ import folium
 import pandas as pd
 from folium import Choropleth
 from django.db.models import Q
-from beats.models import Crime
+from beats.models import Crime, Query
 
 s3_resource = boto3.resource('s3')
 s3_client = boto3.client('s3')
@@ -49,13 +49,52 @@ def upload_file_to_s3(filepath, object_name):
                                                             f'{POLYGON_WISE_COUNT_SHAPEFILE_BUCKET}/{object_name}')
 
 
+def check_if_query_exists(payload):
+    priority = ','.join(payload['priority'])
+    is_incident = payload['is_incident']
+    disposition = ','.join(payload['disposition'])
+    beat_creation_method = payload['beat_creation_method']
+    cfs_per_beat = payload['cfs_per_beat']
+    number_of_beats = payload['number_of_beats']
+    start_datetime = payload['start_datetime']
+    end_datetime = payload['end_datetime']
+
+    logger.info("Checking if query using following params have been computed before.")
+    logger.info("===================================")
+    logger.info(f"{priority}, {is_incident}, {disposition}, {beat_creation_method}, {cfs_per_beat}, "
+                f"{number_of_beats}, {start_datetime}, {end_datetime}")
+    logger.info("===================================")
+
+    query = Q(priority=priority) & Q(is_incident=is_incident) & Q(disposition=disposition) & Q(
+        beat_creation_method=beat_creation_method) & Q(start_datetime=start_datetime) & Q(end_datetime=end_datetime)
+
+    if cfs_per_beat:
+        query &= Q(cfs_per_beat=cfs_per_beat)
+
+    if number_of_beats:
+        query &= Q(number_of_beats=number_of_beats)
+
+    match = Query.objects.filter(query).first()
+    logger.info(f"Matched Query object: {match}")
+    if not match:
+        q = Query(priority=priority, is_incident=is_incident, disposition=disposition,
+                  beat_creation_method=beat_creation_method, cfs_per_beat=cfs_per_beat, number_of_beats=number_of_beats,
+                  start_datetime=start_datetime, end_datetime=end_datetime)
+        q.save()
+
+        return False, Query.objects.filter(query).first()
+
+    return True, match
+
+
 def get_filtered_crime_geo_dataframe(payload, city_obj):
     priority_list = payload['priority']
     is_incident = payload['is_incident']
     disposition_types = payload['disposition']
 
     sd = payload['start_datetime']
-    start_datetime = datetime.datetime(sd.year, sd.month, sd.day, sd.hour, sd.minute, tzinfo=pytz.timezone('US/Arizona'))
+    start_datetime = datetime.datetime(sd.year, sd.month, sd.day, sd.hour, sd.minute,
+                                       tzinfo=pytz.timezone('US/Arizona'))
     ed = payload['end_datetime']
     end_datetime = datetime.datetime(ed.year, ed.month, ed.day, ed.hour, ed.minute, tzinfo=pytz.timezone('US/Arizona'))
 

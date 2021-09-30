@@ -32,8 +32,6 @@ class BeatGenerateForm(forms.ModelForm):
 
     beat_creation_method = forms.ChoiceField(choices=BEAT_CREATION_CHOICES, widget=forms.Select(
         attrs={'class': 'field-margins form-control'}))
-    # disposition_type = forms.ChoiceField(choices=DISPOSITION_CHOICES,
-    #                                      widget=forms.Select(attrs={'class': 'field-margins form-control'}))
     cfs_per_beat = forms.IntegerField(label='Calls for Service per Beat', required=False,
                                       widget=forms.NumberInput(attrs={'class': 'field-margins form-control'}))
     number_of_beats = forms.DecimalField(required=False,
@@ -48,10 +46,6 @@ class BeatGenerateForm(forms.ModelForm):
         fields = (
             'priority', 'disposition', 'beat_creation_method', 'cfs_per_beat', 'number_of_beats',
             'start_datetime', 'end_datetime', 'is_incident')
-
-        # widgets = {
-        #     'priority': forms.SelectMultiple(attrs={'class': 'form-select'})
-        # }
 
     class Media:
         js = ('beats/js/main.js',)

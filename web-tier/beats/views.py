@@ -1,5 +1,6 @@
 import requests
 import threading
+import json
 
 from django.shortcuts import render, redirect
 from .forms import CityForm, BeatGenerateForm
@@ -59,19 +60,32 @@ def generate_beats(request, obj_id=None):
                 payload = form.cleaned_data
                 logger.info(f'Generate beat from data: {payload}')
 
-                polygon_wise_count_shapefile = u.get_filtered_crime_geo_dataframe(
-                    payload, city_obj)
-                payload['polygon_wise_count_shapefile'] = polygon_wise_count_shapefile
+                query_status, query_obj = u.check_if_query_exists(payload)
+                if query_status:
+                    logger.info("Requested Query has been generated before")
+                    beat_shapefile_name = query_obj.beat_shapefile_name
+                else:
+                    logger.info("First time Query")
 
-                response = requests.post(url=url, data=payload)
+                    polygon_wise_count_shapefile = u.get_filtered_crime_geo_dataframe(
+                        payload, city_obj)
+                    payload['polygon_wise_count_shapefile'] = polygon_wise_count_shapefile
 
-                status = response.status_code
-                beat_name = response.text
-                logger.info(f'Http response: {status}, Beat name: {beat_name}')
+                    response = requests.post(url=url, data=payload)
 
-                beat_url = f'zip+s3://{AWS_STORAGE_BUCKET_NAME}/beat_shapefiles/{beat_name}'
+                    status = response.status_code
+                    beat_shapefile_name = response.text
 
-                beat_prefix = beat_name.split('.')[0]
+                    logger.info(f'Http response: {status}, Beat name: {beat_shapefile_name}')
+
+                    logger.info("Updating Query object with beat shapefile name")
+                    query_obj.beat_shapefile_name = beat_shapefile_name
+                    query_obj.save()
+
+                logger.info(f'Beat name: {beat_shapefile_name}')
+                beat_url = f'zip+s3://{AWS_STORAGE_BUCKET_NAME}/beat_shapefiles/{beat_shapefile_name}'
+
+                beat_prefix = beat_shapefile_name.split('.')[0]
                 logger.info(
                     f'beat_url: {beat_url}, beat_prefix: {beat_prefix}')
                 u.create_beats_map(beat_url, beat_prefix)
@@ -96,4 +110,3 @@ def beats_list(request):
     return render(request, 'beats/beats_list.html', {
         'cities': cities
     })
-

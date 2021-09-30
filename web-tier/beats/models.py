@@ -44,3 +44,15 @@ class Crime(models.Model):
 
     def __str__(self):
         return f"{self.event_number}"
+
+
+class Query(models.Model):
+    priority = models.CharField(max_length=100)
+    disposition = models.CharField(max_length=100)
+    beat_creation_method = models.CharField(max_length=100)
+    cfs_per_beat = models.IntegerField(null=True, blank=True)
+    number_of_beats = models.IntegerField(null=True, blank=True)
+    start_datetime = models.CharField(max_length=100)
+    end_datetime = models.CharField(max_length=100)
+    is_incident = models.BooleanField()
+    beat_shapefile_name = models.CharField(max_length=255, null=True, blank=True)
