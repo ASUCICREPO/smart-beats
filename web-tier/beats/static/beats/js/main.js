@@ -37,3 +37,20 @@ function show_hide_beat_creation_methods() {
         }
     })
 }
+
+// tool-tips
+$(document).ready(function () {
+  $('[data-toggle="tooltip1"]').tooltip();
+});
+
+$(document).ready(function () {
+  $('[data-toggle="tooltip2"]').tooltip();
+});
+
+$(document).ready(function () {
+  $('[data-toggle="tooltip3"]').tooltip();
+});
+
+$(document).ready(function () {
+  $('[data-toggle="tooltip4"]').tooltip();
+});
