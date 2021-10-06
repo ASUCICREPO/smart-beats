@@ -1,5 +1,6 @@
 {% extends 'beats/base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block content %}
 <h1>Upload your data source here:</h1>
@@ -15,4 +16,5 @@
         <button class="btn btn-outline-danger btn-lg" type="submit">Upload</button>
     </div>
 </form>
+<script src="{% static 'beats/js/upload.js' %}"></script>
 {% endblock %}

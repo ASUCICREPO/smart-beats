@@ -5,76 +5,108 @@
 {% block content %}
     <div class="card">
         <div class="card-body">
-            <h3>Please utilize the following options to process and filter the dataset for beat creation</h3>
-            <div class="form-group">
+            <h3 style="margin-bottom: 50px;">Please utilize the following options to process and filter the dataset for beat creation</h3>
+            <div class="form-group" style="margin-left: 10px;">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="field box">
-                        <label class="label">Select Priority</label>
-                        <span style="position: relative; top: 1px; left: 3px;" data-toggle="tooltip1" title="Filter dataset by priority chosen">
-                            <i class="fa fa-info-circle" aria-hidden="true" style="font-size: 20px;"></i>
-                        </span>
-                        <div class="control">
-                            {% render_field form.priority %}
-                        </div>
-                    </div>
                     <div class="field box" id="beat_creation_method">
-                        <label class="label">Specify beat creation method</label>
-                        <div class="control">
-                            <div class="select">
-                                {% render_field form.beat_creation_method id="beat_creation_method_id" %}
-                            </div>
-                        </div>
+                      <label class="label" style="margin-bottom: 5px;">
+                        <span style="font-size: 20px; margin-right: 25px;">1.</span>
+                        Select how beats are created
+                      </label>
+                      <div class="control" style="margin-left: 43px;">
+                          <div class="select">
+                              {% render_field form.beat_creation_method id="beat_creation_method_id" %}
+                          </div>
+                      </div>
                     </div>
                     <div class="field box bc_option" id="cfs_per_beat">
-                        <label class="label">Calls-For-Service Per Beat:</label>
-                        <div class="control">
-                            {% render_field form.cfs_per_beat %}
-                        </div>
+                      <label class="label" style="margin-bottom: 5px;">
+                        <span style="margin-right: 43px;"></span>
+                        Calls-For-Service Per Beat
+                      </label>
+                      <div class="control" style="margin-left: 43px;">
+                          {% render_field form.cfs_per_beat %}
+                      </div>
                     </div>
-                    <div class="field box bc_option" id="number_of_beats">
-                        <label class="label">Target Number of Beats:</label>
-                        <div class="control">
+                    <div class="field box bc_option" id="number_of_beats" style="margin-bottom: 20px;">
+                        <label class="label" style="margin-bottom: 5px;">
+                          <span style="margin-right: 43px;"></span>
+                          Target Number of Beats
+                        </label>
+                        <div class="control" style="margin-left: 43px;">
                             {% render_field form.number_of_beats %}
                         </div>
                     </div>
                     <div class="field box">
-                        <label class="label">Specify type of information to display on beats</label>
-                        <span style="position: relative; top: 1px; left: 3px;" data-toggle="tooltip2" title="Determine if results should be based on CFS, Incidents or both">
+                        <label class="label" style="margin-bottom: 5px;">
+                          <span style="font-size: 20px; margin-right: 25px;">2.</span>
+                          Specify type of data to display
+                        </label>
+                        <span style="position: relative; top: 1px; left: 3px;"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="right"
+                          title="Determine if results should be based on CFS, Incidents or both">
                             <i class="fa fa-info-circle" aria-hidden="true" style="font-size: 20px;"></i>
                         </span>
-                        <div class="control">
+                        <div class="control" style="margin-left: 43px;">
                             {% render_field form.is_incident %}
                             <span>Use incident data</span>
                         </div>
                     </div>
-
-
+                    <div class="field box">
+                      <label class="label" style="margin-bottom: 5px;">
+                        <span style="font-size: 20px; margin-right: 25px;">3.</span>
+                        Select Priority
+                      </label>
+                      <span style="position: relative; top: 1px; left: 3px;"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        title="Filter dataset by priority chosen">
+                          <i class="fa fa-info-circle" aria-hidden="true" style="font-size: 20px;"></i>
+                      </span>
+                      <div class="control" style="margin-left: 43px;">
+                          {% render_field form.priority %}
+                      </div>
+                    </div>
+                    <div class="field box">
+                      <label class="label" style="margin-bottom: 5px;">
+                        <span style="font-size: 20px; margin-right: 25px;">4.</span>
+                        Select dispositions
+                      </label>
+                      <span style="position: relative; top: 1px; left: 3px;"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        title="Filter dataset by dispositions chosen">
+                          <i class="fa fa-info-circle" aria-hidden="true" style="font-size: 20px;"></i>
+                      </span>
+                      <div class="control" style="margin-left: 43px;">
+                          {% render_field form.disposition id="disposition_type" %}
+                      </div>
+                    </div>
                     <div class="field box" id="start_date">
-                        <label class="label">Select a starting datetime</label>
-                        <span style="position: relative; top: 1px; left: 3px;" data-toggle="tooltip3" title="Filter dataset by Date and Time range.">
+                        <label class="label" style="margin-bottom: 5px;">
+                          <span style="font-size: 20px; margin-right: 25px;">5.</span>
+                          Select a starting datetime
+                        </label>
+                        <span style="position: relative; top: 1px; left: 3px;"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        title="Filter dataset by Date and Time range.">
                             <i class="fa fa-info-circle" aria-hidden="true" style="font-size: 20px;"></i>
                         </span>
-                        <div class="control">
+                        <div class="control" style="margin-left: 43px;">
                             {% render_field form.start_datetime %}
                         </div>
                     </div>
-
                     <div class="field box" id="end_date">
-                        <label class="label">Select an ending datetime</label>
-                        <div class="control">
-                            {% render_field form.end_datetime %}
-                        </div>
-                    </div>
-
-                    <div class="field box">
-                        <label class="label">Select dispositions</label>
-                        <span style="position: relative; top: 1px; left: 3px;" data-toggle="tooltip4" title="Filter dataset by dispositions chosen">
-                            <i class="fa fa-info-circle" aria-hidden="true" style="font-size: 20px;"></i>
-                        </span>
-                        <div class="control">
-                            {% render_field form.disposition id="disposition_type" %}
-                        </div>
+                      <label class="label" style="margin-bottom: 5px;">
+                        <span style="margin-right: 43px;"></span>
+                        Select an ending datetime
+                      </label>
+                      <div class="control" style="margin-left: 43px;">
+                          {% render_field form.end_datetime %}
+                      </div>
                     </div>
                     <br><br>
                     <div style="display: flex; justify-content: flex-end; margin-top: 10px; margin-bottom: 10px;">

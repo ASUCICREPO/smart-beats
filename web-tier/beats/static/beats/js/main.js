@@ -8,6 +8,12 @@ function show_hide_beat_creation_methods() {
         for (let op of bc_options) {
             op.style.display = "none";
         }
+
+        // tooltips bootstrap
+        let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        let tooltipList = tooltipTriggerList.map(function(element){
+            return new bootstrap.Tooltip(element);
+        });
     });
 
     const number_of_beats_element = document.querySelector("#number_of_beats");
@@ -37,20 +43,3 @@ function show_hide_beat_creation_methods() {
         }
     })
 }
-
-// tool-tips
-$(document).ready(function () {
-  $('[data-toggle="tooltip1"]').tooltip();
-});
-
-$(document).ready(function () {
-  $('[data-toggle="tooltip2"]').tooltip();
-});
-
-$(document).ready(function () {
-  $('[data-toggle="tooltip3"]').tooltip();
-});
-
-$(document).ready(function () {
-  $('[data-toggle="tooltip4"]').tooltip();
-});
