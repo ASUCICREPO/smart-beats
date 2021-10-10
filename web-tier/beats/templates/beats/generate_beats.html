@@ -38,6 +38,22 @@
                             {% render_field form.number_of_beats %}
                         </div>
                     </div>
+{#                    <div class="field box">#}
+{#                        <label class="label" style="margin-bottom: 5px;">#}
+{#                          <span style="font-size: 20px; margin-right: 25px;">2.</span>#}
+{#                          Specify type of data to display#}
+{#                        </label>#}
+{#                        <span style="position: relative; top: 1px; left: 3px;"#}
+{#                          data-bs-toggle="tooltip"#}
+{#                          data-bs-placement="right"#}
+{#                          title="Determine if results should be based on CFS, Incidents or both">#}
+{#                            <i class="fa fa-info-circle" aria-hidden="true" style="font-size: 20px;"></i>#}
+{#                        </span>#}
+{#                        <div class="control" style="margin-left: 43px;">#}
+{#                            {% render_field form.is_incident %}#}
+{#                            <span>Use incident data</span>#}
+{#                        </div>#}
+{#                    </div>#}
                     <div class="field box">
                         <label class="label" style="margin-bottom: 5px;">
                           <span style="font-size: 20px; margin-right: 25px;">2.</span>
@@ -46,12 +62,11 @@
                         <span style="position: relative; top: 1px; left: 3px;"
                           data-bs-toggle="tooltip"
                           data-bs-placement="right"
-                          title="Determine if results should be based on CFS, Incidents or both">
+                          title="Determine if results should be based on Incidents data or Calls-For-Service">
                             <i class="fa fa-info-circle" aria-hidden="true" style="font-size: 20px;"></i>
                         </span>
                         <div class="control" style="margin-left: 43px;">
-                            {% render_field form.is_incident %}
-                            <span>Use incident data</span>
+                            {% render_field form.type_of_data %}
                         </div>
                     </div>
                     <div class="field box">

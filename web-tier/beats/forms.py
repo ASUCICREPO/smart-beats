@@ -30,6 +30,11 @@ class BeatGenerateForm(forms.ModelForm):
         (9, '9 - Contact made'),
     ]
 
+    INCIDENT_CHOICES = [
+        ('True', 'Incident data only'),
+        ('False', 'Calls-For-Service data')
+    ]
+
     beat_creation_method = forms.ChoiceField(choices=BEAT_CREATION_CHOICES, widget=forms.Select(
         attrs={'class': 'field-margins form-control'}))
     cfs_per_beat = forms.IntegerField(label='Calls for Service per Beat', required=False,
@@ -40,12 +45,14 @@ class BeatGenerateForm(forms.ModelForm):
         widget=forms.NumberInput(attrs={'class': 'field-margins form-control', 'type': 'datetime-local'}))
     end_datetime = forms.DateTimeField(
         widget=forms.NumberInput(attrs={'class': 'field-margins form-control', 'type': 'datetime-local'}))
+    type_of_data = forms.CharField(label='Specify type of data to display',
+                                   widget=forms.RadioSelect(choices=INCIDENT_CHOICES))
 
     class Meta:
         model = Crime
         fields = (
             'priority', 'disposition', 'beat_creation_method', 'cfs_per_beat', 'number_of_beats',
-            'start_datetime', 'end_datetime', 'is_incident')
+            'start_datetime', 'end_datetime', 'type_of_data')
 
     class Media:
         js = ('beats/js/main.js',)

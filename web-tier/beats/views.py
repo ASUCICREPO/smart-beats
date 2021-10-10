@@ -58,6 +58,10 @@ def generate_beats(request, obj_id=None):
             logger.info(f'Uncleaned form data: {form.data}')
             if form.is_valid():
                 payload = form.cleaned_data
+
+                # Getting 'is_incident' data from 'type_of_data' radio button
+                payload['is_incident'] = payload['type_of_data']
+
                 logger.info(f'Generate beat from data: {payload}')
 
                 query_status, query_obj = u.check_if_query_exists(payload)
