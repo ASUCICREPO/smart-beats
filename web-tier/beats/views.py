@@ -67,8 +67,12 @@ def generate_beats(request, obj_id=None):
                 else:
                     logger.info("First time Query")
 
-                    polygon_wise_count_shapefile = u.get_filtered_crime_geo_dataframe(
-                        payload, city_obj)
+                    polygon_wise_count_shapefile = u.get_filtered_crime_geo_dataframe(payload, city_obj)
+
+                    if not polygon_wise_count_shapefile:
+                        logger.info("Couldn't generate beats due to invalid request. Redirecting to error page")
+                        return render(request, 'beats/error.html')
+
                     payload['polygon_wise_count_shapefile'] = polygon_wise_count_shapefile
 
                     response = requests.post(url=url, data=payload)

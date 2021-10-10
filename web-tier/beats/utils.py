@@ -10,6 +10,7 @@ import boto3
 import geopandas as gpd
 import folium
 import pandas as pd
+from django.shortcuts import render
 from folium import Choropleth
 from django.db.models import Q
 from beats.models import Crime, Query
@@ -65,16 +66,19 @@ def check_if_query_exists(payload):
                 f"{number_of_beats}, {start_datetime}, {end_datetime}")
     logger.info("===================================")
 
-    query = Q(priority=priority) & Q(is_incident=is_incident) & Q(disposition=disposition) & Q(
+    base_query = Q(priority=priority) & Q(is_incident=is_incident) & Q(disposition=disposition) & Q(
         beat_creation_method=beat_creation_method) & Q(start_datetime=start_datetime) & Q(end_datetime=end_datetime)
 
     if cfs_per_beat:
-        query &= Q(cfs_per_beat=cfs_per_beat)
+        base_query &= Q(cfs_per_beat=cfs_per_beat)
 
     if number_of_beats:
-        query &= Q(number_of_beats=number_of_beats)
+        base_query &= Q(number_of_beats=number_of_beats)
 
-    match = Query.objects.filter(query).first()
+    # Only return successful precomputed queries
+    query_with_zip_filter = base_query & Q(beat_shapefile_name__endswith='.zip')
+
+    match = Query.objects.filter(query_with_zip_filter).first()
     logger.info(f"Matched Query object: {match}")
     if not match:
         q = Query(priority=priority, is_incident=is_incident, disposition=disposition,
@@ -82,7 +86,7 @@ def check_if_query_exists(payload):
                   start_datetime=start_datetime, end_datetime=end_datetime)
         q.save()
 
-        return False, Query.objects.filter(query).first()
+        return False, Query.objects.filter(base_query).first()
 
     return True, match
 
@@ -113,6 +117,10 @@ def get_filtered_crime_geo_dataframe(payload, city_obj):
 
     query_res = Crime.objects.filter(query).values()
     logger.info(f"Total rows received: {len(query_res)}")
+
+    if len(query_res) == 0:
+        logger.info("Invalid Params. Couldn't generate beats.")
+        return None
 
     # Fixing crime csv file before join
     crime_gdf = gpd.GeoDataFrame(query_res, columns=['priority', 'geometry', 'geometry_wkt'])
