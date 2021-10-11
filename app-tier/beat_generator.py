@@ -6,6 +6,7 @@ import utils as u
 from collections import defaultdict
 
 args = defaultdict(lambda: None)
+logger = u.init_logger(__name__)
 
 
 def create_beats():
@@ -13,12 +14,12 @@ def create_beats():
         key, value = arg.split('<=>')
         args[key] = value
 
-    print(f'Build-balanced zones arguments: {args}')
+    logger.info(f'Build-balanced zones arguments: {args}')
     get_beats_threshold()
 
-    arcpy.env.workspace = "arcgis-workspace/arcgis-workspace.gdb"
+    arcpy.env.workspace = s.ARCGIS_WORKSPACE
 
-    print(
+    logger.info(
         f"Zone creation method: {args[s.zone_creation_method]}, Number of zones: {args[s.number_of_zones]}, Zone "
         f"building criteria target: {args[s.zone_building_criteria_target]}")
 
@@ -28,7 +29,7 @@ def create_beats():
         if args[s.number_of_zones]:
             beats_count_calibrator(int(args[s.number_of_zones]), get_beats_threshold())
         else:
-            print("Number of zones provided is Null.")
+            logger.info("Number of zones provided is Null.")
 
     # arcpy.stats.BuildBalancedZones("data/input/census_wise_crime_counts.shp", f"data/output/{args[c.beat_name]}",
     #                                "ATTRIBUTE_TARGET",
@@ -51,7 +52,7 @@ def run_build_balanced_zones(n_test=None):
                                    args[s.zone_building_criteria], "CONTIGUITY_EDGES_ONLY", None, None, None, None,
                                    None, '', 100, 50, 0.1, None)
 
-    print(f"Output shapefile path: {output_path}.shp")
+    logger.info(f"Output shapefile path: {output_path}.shp")
     sf = shapefile.Reader(f"{output_path}.shp")
     zones_set = set()
 
@@ -60,37 +61,37 @@ def run_build_balanced_zones(n_test=None):
 
     total_zones = len(zones_set)
 
-    print(f"***Total zones calculated = {total_zones}***")
+    logger.info(f"***Total zones calculated = {total_zones}***")
 
     return total_zones
 
 
 def beats_count_calibrator(n, total_beats_threshold):
     offset = 0
-    trials = 20
+    trials = s.BEATS_COUNT_CALIBRATOR_TRIALS
 
     while trials > 0:
-        print(f"Trial number: {trials}")
+        logger.info(f"Trial number: {trials}")
 
         n_test = min(n + offset, total_beats_threshold)
 
-        print(f"n_test value: {n_test}")
+        logger.info(f"n_test value: {n_test}")
 
         total_zones = run_build_balanced_zones(n_test)
         error = n - total_zones
 
-        print(f"xx error val: {error} xx")
+        logger.info(f"xx error val: {error} xx")
 
         if error == 0:
             break
         else:
             offset += error
-            print(f"New offset value: {offset}")
+            logger.info(f"New offset value: {offset}")
 
         trials -= 1
         if trials > 0:
             u.delete_file(f"data/output/{args[s.beat_name]}", 0)
 
 
-print("Executing Beats generator")
+logger.info("########## Executing Beats generator ##########")
 create_beats()

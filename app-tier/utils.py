@@ -21,7 +21,9 @@ def init_logger(name):
 
 
 def delete_file(file_path, sleep_time=10):
-    print(f'Deleting output beats file {file_path} after {sleep_time}s')
+    logger = init_logger(__name__)
+
+    logger.info(f'Deleting output beats file {file_path} after {sleep_time}s')
     sleep(sleep_time)
 
     for ext in s.shapefile_components:
@@ -34,6 +36,6 @@ def delete_file(file_path, sleep_time=10):
 
 def download_file_from_s3(bucket_name, object_name):
     s3_resource = boto3.resource('s3')
-    s3_resource.Bucket(bucket_name).download_file(f'polygon_wise_count_shapefile/{object_name}', f'data/input/{object_name}')
+    s3_resource.Bucket(bucket_name).download_file(f'polygon_wise_count_shapefile/{object_name}',
+                                                  f'data/input/{object_name}')
     shutil.unpack_archive(f'data/input/{object_name}', f'data/input/')
-
