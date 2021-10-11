@@ -13,3 +13,7 @@ zone_building_criteria_target = 'zone_building_criteria_target'
 zone_building_criteria = 'zone_building_criteria'
 spatial_constraints = 'spatial_constraints'
 shapefile_components = ['.cpg', '.dbf', '.prj', '.sbn', '.sbx', '.shp', '.shp.xml', '.shx']
+
+# Beat generator script config
+ARCGIS_WORKSPACE = 'arcgis-workspace/arcgis-workspace.gdb'
+BEATS_COUNT_CALIBRATOR_TRIALS = 20
