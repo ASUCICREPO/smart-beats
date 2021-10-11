@@ -10,7 +10,6 @@ import boto3
 import geopandas as gpd
 import folium
 import pandas as pd
-from django.shortcuts import render
 from folium import Choropleth
 from django.db.models import Q
 from beats.models import Crime, Query

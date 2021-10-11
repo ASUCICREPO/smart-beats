@@ -20,16 +20,6 @@ class BeatGenerateForm(forms.ModelForm):
         ('NUMBER_ZONES_AND_ATTRIBUTE', 'Number of Beats')
     ]
 
-    DISPOSITION_CHOICES = [
-        ('initial', 'Select'),
-        (1, '1 - Field Interview'),
-        (2, '2 - False Alarm'),
-        (3, '3 - Unable to locate'),
-        (5, '5 - Assist Fire Department'),
-        (6, '6 - Report'),
-        (9, '9 - Contact made'),
-    ]
-
     INCIDENT_CHOICES = [
         ('True', 'Incident data only'),
         ('False', 'Calls-For-Service data')

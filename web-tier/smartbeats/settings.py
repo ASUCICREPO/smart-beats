@@ -139,3 +139,24 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_S3_REGION_NAME = 'us-east-1'
 AWS_STORAGE_BUCKET_NAME = 'smart-beats-cic'
 AWS_S3_FILE_OVERWRITE = False
+
+# ========================= User specified application settings: START ========================= #
+PRIORITY_CHOICES = ((1, 1),
+                    (2, 2),
+                    (3, 3),
+                    (4, 4),
+                    (5, 5),
+                    (6, 6),
+                    (7, 7),
+                    (9, 9),
+                    )
+DISPOSITION_CHOICES = ((1, '1 - Field Interview'),
+                       (2, '2 - False Alarm'),
+                       (3, '3 - Unable to locate'),
+                       (5, '5 - Assist Fire Department'),
+                       (6, '6 - Report'),
+                       (9, '9 - Contact made'),
+                       )
+APP_SERVER_URL = "http://ec2-100-26-151-201.compute-1.amazonaws.com:5000"
+
+# ========================= User specified application settings: END ========================= #

@@ -1,13 +1,14 @@
 import requests
 import threading
 
+from django.conf import settings as s
 from django.shortcuts import render, redirect
 from .forms import CityForm, BeatGenerateForm
 from .models import City
 from . import utils as u
 
 logger = u.init_logger(__name__)
-url = "http://ec2-100-26-151-201.compute-1.amazonaws.com:5000"
+url = s.APP_SERVER_URL
 AWS_STORAGE_BUCKET_NAME = 'smart-beats-cic'
 
 

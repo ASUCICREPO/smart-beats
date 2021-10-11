@@ -1,6 +1,7 @@
 from django.db import models
 from multiselectfield import MultiSelectField
 from django.contrib.gis.db import models as spatial_models
+from django.conf import settings as s
 
 
 class City(models.Model):
@@ -18,16 +19,8 @@ class City(models.Model):
 
 
 class Crime(models.Model):
-    PRIORITY_CHOICES = ((i, i) for i in range(1, 10))
-    DISPOSITION_CHOICES = ((1, '1 - Field Interview'),
-                           (2, '2 - False Alarm'),
-                           (3, '3 - Unable to locate'),
-                           (5, '5 - Assist Fire Department'),
-                           (6, '6 - Report'),
-                           (9, '9 - Contact made'),)
-
     event_number = models.CharField(max_length=256)
-    priority = MultiSelectField(choices=PRIORITY_CHOICES)
+    priority = MultiSelectField(choices=s.PRIORITY_CHOICES)
     address = models.CharField(max_length=256)
     lat = models.DecimalField(max_digits=5, decimal_places=2)
     lon = models.DecimalField(max_digits=5, decimal_places=2)
@@ -35,7 +28,7 @@ class Crime(models.Model):
     is_incident = models.BooleanField()
     geometry_wkt = models.CharField(max_length=100)
     timestamp = models.DateTimeField(null=True, blank=True)
-    disposition = MultiSelectField(choices=DISPOSITION_CHOICES)
+    disposition = MultiSelectField(choices=s.DISPOSITION_CHOICES)
 
     def __str__(self):
         return f"{self.event_number}"
