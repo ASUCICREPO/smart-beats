@@ -35,6 +35,9 @@ class BeatGenerateForm(forms.ModelForm):
         ('False', 'Calls-For-Service data')
     ]
 
+    # priority_choice = forms.ModelMultipleChoiceField(
+    #     queryset=Crime.objects.order_by().values_list('priority', flat=True).distinct())
+
     beat_creation_method = forms.ChoiceField(choices=BEAT_CREATION_CHOICES, widget=forms.Select(
         attrs={'class': 'field-margins form-control'}))
     cfs_per_beat = forms.IntegerField(label='Calls for Service per Beat', required=False,

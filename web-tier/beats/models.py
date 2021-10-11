@@ -7,7 +7,7 @@ class City(models.Model):
     city = models.CharField(default='Glendale', max_length=255)
     state = models.CharField(default='Arizona', max_length=255)
     country = models.CharField(default='USA', max_length=255)
-    city_shapefile = models.FileField(upload_to='city_shapefiles/')
+    city_shapefile = models.FileField(upload_to='city_shapefiles/', null=True, blank=True)
     crime_data = models.FileField(upload_to='city_crime_ds/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -51,3 +51,10 @@ class Query(models.Model):
     end_datetime = models.CharField(max_length=100)
     is_incident = models.BooleanField()
     beat_shapefile_name = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.priority}; {self.disposition};{self.beat_creation_method};{self.cfs_per_beat};" \
+               f"{self.number_of_beats};{self.start_datetime};{self.end_datetime};{self.is_incident};" \
+               f"{self.beat_shapefile_name}"
+
+

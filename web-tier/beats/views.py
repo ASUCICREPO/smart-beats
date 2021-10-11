@@ -1,6 +1,5 @@
 import requests
 import threading
-import json
 
 from django.shortcuts import render, redirect
 from .forms import CityForm, BeatGenerateForm
@@ -101,6 +100,7 @@ def generate_beats(request, obj_id=None):
                 beat_map_html = f'beats/{beat_prefix}.html'
                 return render(request, beat_map_html)
             else:
+                logger.info(f"Invalid form data: {form.cleaned_data}")
                 logger.info('Well... the form turned out to be invalid')
         finally:
             if beat_map_html:
