@@ -148,6 +148,8 @@ def get_filtered_crime_geo_dataframe(payload, city_obj):
     logger.info(polygon_wise_crime_counts)
 
     pwcc_shapefile = ''.join([str(uuid.uuid4().hex[:6]), '_pwcc'])
+    polygon_wise_crime_counts.crs = 'epsg:4326'
+
     polygon_wise_crime_counts.to_file(filename=f"temp/{pwcc_shapefile}", driver='ESRI Shapefile')
     shutil.make_archive(f"temp/{pwcc_shapefile}", 'zip', f"temp/{pwcc_shapefile}")
 
