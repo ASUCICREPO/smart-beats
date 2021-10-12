@@ -9,6 +9,7 @@ import subprocess
 import settings as s
 import utils as u
 import boto3
+import os.path
 
 logger = u.init_logger(__name__)
 app = Flask(__name__)
@@ -17,6 +18,7 @@ app = Flask(__name__)
 @app.route('/', methods=['POST'])
 def index():
     file_name = None
+    script_params = {}
     try:
         request_params = dict(request.form)
         logger.info(f'Request params received from web server: {request_params}')
@@ -49,9 +51,17 @@ def index():
         return response_txt, 200
 
     finally:
+        if s.input_shapefile_path in script_params:
+            pwcc_file_name = script_params[s.input_shapefile_path].split('.')[0]
+            logger.info(f'pwcc file path to be deleted: {pwcc_file_name}')
+            t1 = threading.Thread(target=u.delete_file, args=(pwcc_file_name,))
+            t1.start()
+
         if file_name:
-            t = threading.Thread(target=u.delete_file, args=(f"{s.output_path}/{file_name.split('.')[0]}",))
-            t.start()
+            output_file_name = f"{s.output_path}/{file_name.split('.')[0]}"
+            logger.info(f'Output file path to be deleted: {output_file_name}')
+            t2 = threading.Thread(target=u.delete_file, args=(output_file_name,))
+            t2.start()
 
 
 def get_beat_generator_params(request_params):
@@ -82,7 +92,12 @@ def get_beat_generator_params(request_params):
 def create_output_zip_file(beat_name):
     with ZipFile(f'{s.output_path}/{beat_name}.zip', 'w') as zip_obj:
         for ext in s.shapefile_components:
-            zip_obj.write(f'{s.output_path}/{beat_name}{ext}', f'{beat_name}{ext}')
+            file_path = f'{s.output_path}/{beat_name}{ext}'
+            if os.path.exists(file_path):
+                logger.info(file_path + " : EXISTS")
+                zip_obj.write(f'{s.output_path}/{beat_name}{ext}', f'{beat_name}{ext}')
+            else:
+                logger.info(file_path + " : DOESN'T EXIST")
 
     return f'{s.output_path}/{beat_name}.zip', f'{beat_name}.zip'
 

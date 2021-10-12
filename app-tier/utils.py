@@ -23,7 +23,7 @@ def init_logger(name):
 def delete_file(file_path, sleep_time=10):
     logger = init_logger(__name__)
 
-    logger.info(f'Deleting output beats file {file_path} after {sleep_time}s')
+    logger.info(f'Deleting shapefile residue {file_path} after {sleep_time}s')
     sleep(sleep_time)
 
     for ext in s.shapefile_components:
