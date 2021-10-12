@@ -1,3 +1,5 @@
+import os.path
+
 import requests
 import threading
 
@@ -6,6 +8,7 @@ from django.shortcuts import render, redirect
 from .forms import CityForm, BeatGenerateForm
 from .models import City
 from . import utils as u
+import shutil
 
 logger = u.init_logger(__name__)
 url = s.APP_SERVER_URL
@@ -51,6 +54,7 @@ def generate_beats(request, obj_id=None):
     city_obj = City.objects.get(id=obj_id)
     logger.info(f"city_obj: {city_obj}")
     beat_map_html = None
+    polygon_wise_count_shapefile = None
 
     if request.method == 'POST':
         try:
@@ -104,10 +108,21 @@ def generate_beats(request, obj_id=None):
                 logger.info(f"Invalid form data: {form.cleaned_data}")
                 logger.info('Well... the form turned out to be invalid')
         finally:
+            if polygon_wise_count_shapefile:
+                pwcc_dir = polygon_wise_count_shapefile.split('.')[0]
+
+                t1 = threading.Thread(target=u.delete_file, args=(
+                    f'temp/{polygon_wise_count_shapefile}',))
+                t1.start()
+
+                if os.path.exists(f'temp/{pwcc_dir}'):
+                    logger.info(f'Deleting pwcc_dir {pwcc_dir}')
+                    shutil.rmtree(f'temp/{pwcc_dir}')
+
             if beat_map_html:
-                t = threading.Thread(target=u.delete_file, args=(
+                t2 = threading.Thread(target=u.delete_file, args=(
                     f'beats/templates/{beat_map_html}',))
-                t.start()
+                t2.start()
     else:
         form = BeatGenerateForm()
 

@@ -148,6 +148,8 @@ def get_filtered_crime_geo_dataframe(payload, city_obj):
     logger.info(polygon_wise_crime_counts)
 
     pwcc_shapefile = ''.join([str(uuid.uuid4().hex[:6]), '_pwcc'])
+    polygon_wise_crime_counts.crs = 'epsg:4326'
+
     polygon_wise_crime_counts.to_file(filename=f"temp/{pwcc_shapefile}", driver='ESRI Shapefile')
     shutil.make_archive(f"temp/{pwcc_shapefile}", 'zip', f"temp/{pwcc_shapefile}")
 
@@ -158,6 +160,12 @@ def get_filtered_crime_geo_dataframe(payload, city_obj):
 def create_beats_map(beats_shapefile_url, beat_prefix):
     beats_gpd = gpd.read_file(beats_shapefile_url)
     beats_gpd = beats_gpd[['ZONE_ID', 'geometry', 'count']]
+
+    logger.info(f"CRS: {beats_gpd.crs}")
+
+    if not beats_gpd.crs:
+        logger.info("Setting CRS")
+        beats_gpd.crs = "EPSG:4326"
 
     beats = beats_gpd.dissolve(by='ZONE_ID', aggfunc='sum')
     beats['beat_no'] = beats.index
