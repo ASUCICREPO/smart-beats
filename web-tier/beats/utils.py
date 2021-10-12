@@ -159,6 +159,12 @@ def create_beats_map(beats_shapefile_url, beat_prefix):
     beats_gpd = gpd.read_file(beats_shapefile_url)
     beats_gpd = beats_gpd[['ZONE_ID', 'geometry', 'count']]
 
+    logger.info(f"CRS: {beats_gpd.crs}")
+
+    if not beats_gpd.crs:
+        logger.info("Setting CRS")
+        beats_gpd.crs = "EPSG:4326"
+
     beats = beats_gpd.dissolve(by='ZONE_ID', aggfunc='sum')
     beats['beat_no'] = beats.index
 
