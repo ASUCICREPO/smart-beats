@@ -9,7 +9,14 @@ orDiv.style.alignItems = "center";
 elOne.insertAdjacentElement("afterend", orDiv);
 
 let newNode = document.createElement("span");
-newNode.innerHTML = "Drop file here or click to upload";
+newNode.innerHTML = ` <div>
+                        <i class="fa fa-upload fa-5x" aria-hidden="true"></i>
+                      </div>
+                      <div>
+                        Drop file here or click to upload
+                      </div>`;
+newNode.style.display = "flex";
+newNode.style.flexDirection = "column";
 newNode.classList.add("drop-zone__prompt");
 
 let parentDivOne = document.getElementById("id_city_shapefile").parentNode;
@@ -17,7 +24,14 @@ parentDivOne.classList.add("drop-zone");
 parentDivOne.insertBefore(newNode, parentDivOne.firstChild);
 
 let newNodeOne = document.createElement("span");
-newNodeOne.innerHTML = "Drop file here or click to upload";
+newNodeOne.innerHTML = ` <div>
+                        <i class="fa fa-upload fa-5x" aria-hidden="true"></i>
+                      </div>
+                      <div>
+                        Drop file here or click to upload
+                      </div>`;
+newNodeOne.style.display = "flex";
+newNodeOne.style.flexDirection = "column";
 newNodeOne.classList.add("drop-zone__prompt");
 
 let parentDivTwo = document.getElementById("id_crime_data").parentNode;

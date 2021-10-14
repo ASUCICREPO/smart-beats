@@ -6,8 +6,16 @@
 <h1>Upload your data source here:</h1>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <legend class="border-bottom mb-4">
+    <legend style="margin-bottom: 40px;">
         Upload new data source (.shp and .csv files)
+        <span
+            style="position: relative; top: -2px; left: 13px"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Click this button to download an example of the file to upload"
+          >
+          <a class="btn btn-outline-danger btn-sm" href="{% url 'download_file' %}">Download File</a>
+          </span>
     </legend>
     <fieldset class="form-group" style="display: flex;">
         {{ form|crispy }}
@@ -17,4 +25,5 @@
     </div>
 </form>
 <script src="{% static 'beats/js/upload.js' %}"></script>
+<script src="{% static 'beats/js/main.js' %}"></script>
 {% endblock %}
