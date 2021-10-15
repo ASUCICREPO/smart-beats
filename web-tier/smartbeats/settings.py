@@ -140,12 +140,6 @@ AWS_S3_REGION_NAME = 'us-east-1'
 AWS_STORAGE_BUCKET_NAME = 'smart-beats-cic'
 AWS_S3_FILE_OVERWRITE = False
 
-# postgres credentials
-PGHOST = 'glendale-crime-instance-1.ct4vmw6vgoeq.us-east-1.rds.amazonaws.com'
-PGDATABASE = 'glendale_crime_db'
-PGUSER = 'crime_db'
-PGPASSWORD = 'HelloDB123!'
-
 # ========================= User specified application settings: START ========================= #
 PRIORITY_CHOICES = ((1, 1),
                     (2, 2),

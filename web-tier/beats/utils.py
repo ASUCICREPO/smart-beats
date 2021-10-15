@@ -15,7 +15,6 @@ from django.db.models import Q
 from beats.models import Crime, Query
 import io
 import psycopg2
-from django.conf import settings as s
 
 
 s3_resource = boto3.resource('s3')
@@ -261,7 +260,7 @@ def copy_from_file(conn, df, table):
     cursor = conn.cursor()
     try:
         cursor.copy_from(f, table, sep=",")
-        cursor.execute(f"DELETE  FROM {table} A USING {table} B WHERE A.ctid < B.ctid AND A.id = B.id AND A.event_number = B.event_number AND A.priority = B.priority AND A.address = B.address AND A.is_incident = B.is_incident AND A.geometry_wkt = B.geometry_wkt AND A.timestamp = B.timestamp AND A.disposition = B.disposition")
+        cursor.execute(f"DELETE  FROM {table} A USING {table} B WHERE A.ctid < B.ctid AND A.event_number = B.event_number AND A.priority = B.priority AND A.address = B.address AND A.is_incident = B.is_incident AND A.geometry_wkt = B.geometry_wkt AND A.timestamp = B.timestamp AND A.disposition = B.disposition")
         conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
         os.remove(tmp_df)
@@ -283,10 +282,10 @@ def upload_handler(key):
         df = pd.read_csv(io.BytesIO(response['Body'].read()))
 
         param_dic = {
-            "host": s.PGHOST,
-            "database": s.PGDATABASE,
-            "user": s.PGUSER,
-            "password": s.PGPASSWORD
+            "host": os.environ['AURORA_HOSTNAME'],
+            "database": os.environ['AURORA_DB_NAME'],
+            "user": os.environ['AURORA_USERNAME'],
+            "password": os.environ['AURORA_PASSWORD']
         }
 
         conn = connect(param_dic)  # connect to the database

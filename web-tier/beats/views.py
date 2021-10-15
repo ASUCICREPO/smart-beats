@@ -38,15 +38,17 @@ def upload(request):
                 if data['crime_data']:
                     data_row.crime_data = data['crime_data']
                     data_row.save()
-                logger.info("Update complete")
+                logger.info("Updated previously existing data")
             else:
                 form.save()
-                logger.info("Upload complete")
+                logger.info("Upload new data")
 
-            data_row = City.objects.get(city='Glendale')
-            key_name = str(data_row.crime_data)
-            logger.info(f"Key name + {key_name}")
-            u.upload_handler(key_name)
+
+            if data['crime_data']:
+                data_row = City.objects.get(city='Glendale')
+                key_name = str(data_row.crime_data)
+                logger.info(f"Key name + {key_name}")
+                u.upload_handler(key_name)
             return redirect('/generate/1')
     else:
         form = CityForm()
