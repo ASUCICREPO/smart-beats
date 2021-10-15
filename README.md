@@ -4,7 +4,7 @@
 |Index| Description|
 |:----------------|:-----------|
 | [Overview](#overview)         |     See the motivation behind this project.    | 
-| [Description](#description)         |     Learn more about the problem, implemented solution and challenges faced    | 
+| [Description](#description)         |     Learn more about the problem, implemented solution and challenges faced.    | 
 | [Installation Guide](#installation-guide)         |    How to install Smartbeats architecture. |
 | [How to Use](#how-to-use)       |     Instructions to use Smartbeats.   |
 | [Credits](#credits)      |     Meet the team behind this.     |
@@ -58,6 +58,9 @@ We have used the following technologies to develop the application:
 2. [Amazon S3](https://aws.amazon.com/s3/): To store crime .csv and city shapefile
 3. [Amazon Aurora](https://aws.amazon.com/rds/aurora/): To store data in crime .csv file
 4. [Amazon EC2](https://aws.amazon.com/ec2/): Deployment of web-tier
+5. [Pandas](https://pandas.pydata.org/): Data preprocessing
+6. [GeoPandas](https://geopandas.org/): Spatial joins and geo-processing
+7. [Folium](https://python-visualization.github.io/folium/): Visualization of generated beats map
 
 ### App-Tier
 1. Python + [Flask](https://flask.palletsprojects.com/en/2.0.x/): Application Development
@@ -66,6 +69,10 @@ We have used the following technologies to develop the application:
 4. [Amazon EC2](https://aws.amazon.com/ec2/): Windows EC2 to host ArcGIS Pro and deploy App server
 
 ## Challenges
+
+
+## Assumptions
+
 
 ## Future Enhancements
 1. Overlaying beats map with real time police officer location information
@@ -79,11 +86,12 @@ We have used the following technologies to develop the application:
 9. Use information such as phone calls, traffic data and CCTV footage to analyze and generate better beats.
 
 # Installation Guide
-
+## 1. Web-Tier
 
 # How to use
 
 
 # Credits
 
-# License``
+# License
+This project is distributed under the [Apache License 2.0](https://github.com/ASUCICREPO/smart-beats/blob/master/LICENSE)
