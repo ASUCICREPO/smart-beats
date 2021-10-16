@@ -19,11 +19,11 @@ class City(models.Model):
 
 class Crime(models.Model):
     priority = MultiSelectField(choices=s.PRIORITY_CHOICES)
-    disposition = MultiSelectField(choices=s.DISPOSITION_CHOICES)
-    is_incident = models.BooleanField()
     address = models.CharField(max_length=512)
+    is_incident = models.BooleanField()
     geometry_wkt = models.CharField(max_length=100)
     timestamp = models.DateTimeField(null=True, blank=True)
+    disposition = MultiSelectField(choices=s.DISPOSITION_CHOICES)
 
     def __str__(self):
         return f"{self.priority};{self.disposition};{self.is_incident};{self.address};{self.geometry_wkt};" \
