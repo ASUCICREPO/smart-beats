@@ -16,7 +16,6 @@ from beats.models import Crime, Query
 import io
 import psycopg2
 
-
 s3_resource = boto3.resource('s3')
 s3_client = boto3.client('s3')
 AWS_STORAGE_BUCKET_NAME = 'smart-beats-cic'
@@ -241,8 +240,9 @@ def connect(params_dic):
         logger.info('Connecting to the PostgreSQL database...')
         conn = psycopg2.connect(**params_dic)
     except (Exception, psycopg2.DatabaseError) as error:
-        logger.info(error)
-        sys.exit(1)
+        logger.error(error)
+        return None
+        # sys.exit(1)
     logger.info("Connection successful")
     return conn
 
@@ -260,11 +260,12 @@ def copy_from_file(conn, df, table):
     cursor = conn.cursor()
     try:
         cursor.copy_from(f, table, sep=",")
-        cursor.execute(f"DELETE  FROM {table} A USING {table} B WHERE A.ctid < B.ctid AND A.event_number = B.event_number AND A.priority = B.priority AND A.address = B.address AND A.is_incident = B.is_incident AND A.geometry_wkt = B.geometry_wkt AND A.timestamp = B.timestamp AND A.disposition = B.disposition")
+        cursor.execute(
+            f"DELETE  FROM {table} A USING {table} B WHERE A.ctid < B.ctid AND A.priority = B.priority AND A.address = B.address AND A.is_incident = B.is_incident AND A.geometry_wkt = B.geometry_wkt AND A.timestamp = B.timestamp AND A.disposition = B.disposition")
         conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
         os.remove(tmp_df)
-        logger.info("Error: %s" % error)
+        logger.error("Error: %s" % error)
         conn.rollback()
         cursor.close()
         return 1
@@ -274,7 +275,6 @@ def copy_from_file(conn, df, table):
 
 
 def upload_handler(key):
-
     bucket = "smart-beats-cic"
 
     try:
@@ -290,11 +290,13 @@ def upload_handler(key):
 
         conn = connect(param_dic)  # connect to the database
         # copy the dataframe to SQL
-        copy_from_file(conn, df, 'file_upload_data')
-        conn.close()  # close the connection
+        if conn:
+            copy_from_file(conn, df, 'file_upload_data')
+            conn.close()  # close the connection
 
-        logger.info('Upload to aurora complete')
+            logger.info('Upload to aurora complete')
     except Exception as e:
-        logger.info(e)
-        logger.info('Error getting object {} from bucket {}. Make sure they exist and your bucket is in the same region as this function.'.format(key, bucket))
+        logger.error(e)
+        logger.error('Error getting object {} from bucket {}. Make sure they exist and your bucket is in the same '
+                     'region as this function.'.format(key, bucket))
         raise e

@@ -29,8 +29,8 @@ def upload(request):
 
         if form.is_valid():
             data = form.cleaned_data
-            if City.objects.filter(city='Glendale').exists():
-                data_row = City.objects.get(city='Glendale')
+            if City.objects.filter(city=s.CITY).exists():
+                data_row = City.objects.get(city=s.CITY)
                 logger.info("Previous object exists")
                 if data['city_shapefile']:
                     data_row.city_shapefile = data['city_shapefile']

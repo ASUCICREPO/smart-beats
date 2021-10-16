@@ -18,14 +18,10 @@ class City(models.Model):
 
 
 class Crime(models.Model):
-    # event_number = models.CharField(max_length=256)
     priority = MultiSelectField(choices=s.PRIORITY_CHOICES)
     disposition = MultiSelectField(choices=s.DISPOSITION_CHOICES)
     is_incident = models.BooleanField()
     address = models.CharField(max_length=512)
-    # lat = models.DecimalField(max_digits=5, decimal_places=2)
-    # lon = models.DecimalField(max_digits=5, decimal_places=2)
-    # geometry = spatial_models.PointField()
     geometry_wkt = models.CharField(max_length=100)
     timestamp = models.DateTimeField(null=True, blank=True)
 
