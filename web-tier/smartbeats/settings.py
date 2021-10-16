@@ -73,19 +73,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'smartbeats.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': os.environ['AURORA_DB_NAME'],
-        'USER': os.environ['AURORA_USERNAME'],
-        'PASSWORD': os.environ['AURORA_PASSWORD'],
-        'HOST': os.environ['AURORA_HOSTNAME'],
-        'PORT': os.environ['AURORA_PORT'],
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -132,6 +119,26 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# ========================= User specified application settings: START ========================= #
+# City table
+CITY = 'Glendale'
+STATE = 'Arizona'
+COUNTRY = 'USA'
+
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': os.environ['AURORA_DB_NAME'],
+        'USER': os.environ['AURORA_USERNAME'],
+        'PASSWORD': os.environ['AURORA_PASSWORD'],
+        'HOST': os.environ['AURORA_HOSTNAME'],
+        'PORT': os.environ['AURORA_PORT'],
+    }
+}
+
 # AWS credentials
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
@@ -140,7 +147,6 @@ AWS_S3_REGION_NAME = 'us-east-1'
 AWS_STORAGE_BUCKET_NAME = 'smart-beats-cic'
 AWS_S3_FILE_OVERWRITE = False
 
-# ========================= User specified application settings: START ========================= #
 PRIORITY_CHOICES = ((1, 1),
                     (2, 2),
                     (3, 3),

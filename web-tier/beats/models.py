@@ -1,13 +1,12 @@
 from django.db import models
 from multiselectfield import MultiSelectField
-from django.contrib.gis.db import models as spatial_models
 from django.conf import settings as s
 
 
 class City(models.Model):
-    city = models.CharField(default='Glendale', max_length=255)
-    state = models.CharField(default='Arizona', max_length=255)
-    country = models.CharField(default='USA', max_length=255)
+    city = models.CharField(default=s.CITY, max_length=255)
+    state = models.CharField(default=s.STATE, max_length=255)
+    country = models.CharField(default=s.COUNTRY, max_length=255)
     city_shapefile = models.FileField(upload_to='city_shapefiles/', null=True, blank=True)
     crime_data = models.FileField(upload_to='city_crime_ds/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -19,19 +18,20 @@ class City(models.Model):
 
 
 class Crime(models.Model):
-    event_number = models.CharField(max_length=256)
+    # event_number = models.CharField(max_length=256)
     priority = MultiSelectField(choices=s.PRIORITY_CHOICES)
-    address = models.CharField(max_length=256)
-    lat = models.DecimalField(max_digits=5, decimal_places=2)
-    lon = models.DecimalField(max_digits=5, decimal_places=2)
-    geometry = spatial_models.PointField()
+    disposition = MultiSelectField(choices=s.DISPOSITION_CHOICES)
     is_incident = models.BooleanField()
+    address = models.CharField(max_length=512)
+    # lat = models.DecimalField(max_digits=5, decimal_places=2)
+    # lon = models.DecimalField(max_digits=5, decimal_places=2)
+    # geometry = spatial_models.PointField()
     geometry_wkt = models.CharField(max_length=100)
     timestamp = models.DateTimeField(null=True, blank=True)
-    disposition = MultiSelectField(choices=s.DISPOSITION_CHOICES)
 
     def __str__(self):
-        return f"{self.event_number}"
+        return f"{self.priority};{self.disposition};{self.is_incident};{self.address};{self.geometry_wkt};" \
+               f"{self.timestamp}"
 
 
 class Query(models.Model):
@@ -49,5 +49,3 @@ class Query(models.Model):
         return f"{self.priority}; {self.disposition};{self.beat_creation_method};{self.cfs_per_beat};" \
                f"{self.number_of_beats};{self.start_datetime};{self.end_datetime};{self.is_incident};" \
                f"{self.beat_shapefile_name}"
-
-

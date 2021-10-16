@@ -43,7 +43,6 @@ def upload(request):
                 form.save()
                 logger.info("Upload new data")
 
-
             if data['crime_data']:
                 data_row = City.objects.get(city='Glendale')
                 key_name = str(data_row.crime_data)
@@ -54,6 +53,7 @@ def upload(request):
         form = CityForm()
 
     return render(request, 'beats/upload.html', {'form': form})
+
 
 def download_file(request):
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
