@@ -255,7 +255,7 @@ def copy_from_file(conn, df, table):
     """
     # Save the dataframe to disk
     tmp_df = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "tmp_dataframe.csv")
-    df.to_csv(tmp_df, index=False)
+    df.to_csv(tmp_df, index=False, header=False)
     f = open(tmp_df, 'r')
     cursor = conn.cursor()
     try:
