@@ -18,6 +18,7 @@ class City(models.Model):
 
 
 class Crime(models.Model):
+    event_number = models.CharField(max_length=256)
     priority = MultiSelectField(choices=s.PRIORITY_CHOICES)
     address = models.CharField(max_length=512)
     is_incident = models.BooleanField()

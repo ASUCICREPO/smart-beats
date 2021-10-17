@@ -255,13 +255,14 @@ def copy_from_file(conn, df, table):
     """
     # Save the dataframe to disk
     tmp_df = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "tmp_dataframe.csv")
-    df.to_csv(tmp_df, index=False, header=False)
+    df.to_csv(tmp_df, index=False)
     f = open(tmp_df, 'r')
     cursor = conn.cursor()
     try:
-        cursor.copy_from(f, table, sep=",")
+        cursor.copy_from(file=f, table=table, sep=",", columns=('event_number', 'priority', 'address', 'is_incident',
+                                                                'geometry_wkt', 'timestamp', 'disposition'))
         cursor.execute(
-            f"DELETE  FROM {table} A USING {table} B WHERE A.ctid < B.ctid AND A.priority = B.priority AND A.address = B.address AND A.is_incident = B.is_incident AND A.geometry_wkt = B.geometry_wkt AND A.timestamp = B.timestamp AND A.disposition = B.disposition")
+            f"DELETE  FROM {table} A USING {table} B WHERE A.ctid < B.ctid AND A.event_number = B.event_number AND A.priority = B.priority AND A.address = B.address AND A.is_incident = B.is_incident AND A.geometry_wkt = B.geometry_wkt AND A.timestamp = B.timestamp AND A.disposition = B.disposition")
         conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
         os.remove(tmp_df)
@@ -276,10 +277,17 @@ def copy_from_file(conn, df, table):
 
 def upload_handler(key):
     bucket = "smart-beats-cic"
+    pd.set_option('display.max_columns', None)
 
     try:
         response = s3_client.get_object(Bucket=bucket, Key=key)
         df = pd.read_csv(io.BytesIO(response['Body'].read()))
+        logger.info(f"Initial CSV: {df.head()}")
+
+        df = df[['event_number', 'priority', 'address', 'is_incident',
+                 'geometry_wkt', 'timestamp', 'disposition']]
+        logger.info(f"Updated CSV a/c to Crime model: {df.head()}")
+
 
         param_dic = {
             "host": os.environ['AURORA_HOSTNAME'],
@@ -291,7 +299,7 @@ def upload_handler(key):
         conn = connect(param_dic)  # connect to the database
         # copy the dataframe to SQL
         if conn:
-            copy_from_file(conn, df, 'file_upload_data')
+            copy_from_file(conn, df, 'beats_crime')
             conn.close()  # close the connection
 
             logger.info('Upload to aurora complete')
