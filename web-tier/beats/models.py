@@ -7,8 +7,8 @@ class City(models.Model):
     city = models.CharField(default=s.CITY, max_length=255)
     state = models.CharField(default=s.STATE, max_length=255)
     country = models.CharField(default=s.COUNTRY, max_length=255)
-    city_shapefile = models.FileField(upload_to='city_shapefiles/', null=True, blank=True)
-    crime_data = models.FileField(upload_to='city_crime_ds/', null=True, blank=True)
+    city_shapefile = models.FileField(upload_to=f'{s.S3_CITY_SHAPEFILES_DIR}/', null=True, blank=True)
+    crime_data = models.FileField(upload_to=f'{s.S3_CITY_CRIME_DS_DIR}/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def delete(self, *args, **kwargs):

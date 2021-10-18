@@ -14,7 +14,6 @@ from django.http.response import HttpResponse
 
 logger = u.init_logger(__name__)
 url = s.APP_SERVER_URL
-AWS_STORAGE_BUCKET_NAME = 'smart-beats-cic'
 
 
 def home(request):
@@ -116,7 +115,7 @@ def generate_beats(request, obj_id=None):
                     query_obj.save()
 
                 logger.info(f'Beat name: {beat_shapefile_name}')
-                beat_url = f'zip+s3://{AWS_STORAGE_BUCKET_NAME}/beat_shapefiles/{beat_shapefile_name}'
+                beat_url = f'zip+s3://{s.AWS_STORAGE_BUCKET_NAME}/{s.S3_BEAT_SHAPEFILES_DIR}/{beat_shapefile_name}'
 
                 beat_prefix = beat_shapefile_name.split('.')[0]
                 logger.info(

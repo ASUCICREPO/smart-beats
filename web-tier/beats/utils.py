@@ -15,11 +15,10 @@ from django.db.models import Q
 from beats.models import Crime, Query
 import io
 import psycopg2
+from django.conf import settings as s
 
 s3_resource = boto3.resource('s3')
 s3_client = boto3.client('s3')
-AWS_STORAGE_BUCKET_NAME = 'smart-beats-cic'
-POLYGON_WISE_COUNT_SHAPEFILE_BUCKET = 'polygon_wise_count_shapefile'
 
 
 # Logging
@@ -47,8 +46,8 @@ def delete_file(file_path):
 
 
 def upload_file_to_s3(filepath, object_name):
-    s3_resource.Bucket(AWS_STORAGE_BUCKET_NAME).upload_file(filepath,
-                                                            f'{POLYGON_WISE_COUNT_SHAPEFILE_BUCKET}/{object_name}')
+    s3_resource.Bucket(s.AWS_STORAGE_BUCKET_NAME).upload_file(filepath,
+                                                              f'{s.S3_POLYGON_WISE_COUNT_SHAPEFILE_DIR}/{object_name}')
 
 
 def check_if_query_exists(payload):
@@ -287,7 +286,6 @@ def upload_handler(key):
         df = df[['event_number', 'priority', 'address', 'is_incident',
                  'geometry_wkt', 'timestamp', 'disposition']]
         logger.info(f"Updated CSV a/c to Crime model: {df.head()}")
-
 
         param_dic = {
             "host": os.environ['AURORA_HOSTNAME'],
