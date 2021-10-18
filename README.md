@@ -68,10 +68,15 @@ We have used the following technologies to develop the application:
 3. [ArcGIS Pro](https://pro.arcgis.com/en/pro-app/latest/get-started/get-started.htm): Spatial data processing
 4. [Amazon EC2](https://aws.amazon.com/ec2/): Windows EC2 to host ArcGIS Pro and deploy App server
 
-## Challenges
+<!-- ## Challenges
+1. To generate the exact  -->
 
 
 ## Assumptions
+1. We have provided the sample [Crime csv](https://github.com/ASUCICREPO/smart-beats/blob/master/web-tier/beats/static/beats/example.csv) file that is required to generate beats. We are expecting the input file to be in the exact format.
+2. Our application will not perform Geo-coding (the process of converting addresses into geographic coordinates). It has to be done on user end to create Crime csv file.
+3. We are using ArcGIS Pro: buildBalancedZones() API in the backend. The user must have an active ArcGIS Pro subscription in the application server.
+4. All spatial components (Geometry) like Points and Polygons in the input files (City shapefile + Crime csv) must have `epsg:4326`
 
 
 ## Future Enhancements
@@ -85,13 +90,13 @@ We have used the following technologies to develop the application:
 8. Color coding beats based on incident resolution data.
 9. Use information such as phone calls, traffic data and CCTV footage to analyze and generate better beats.
 
-# Installation Guide
-## 1. Web-Tier
+<!-- # Installation Guide
+## Web-Tier
 
 # How to use
 
 
-# Credits
+# Credits -->
 
 # License
 This project is distributed under the [Apache License 2.0](https://github.com/ASUCICREPO/smart-beats/blob/master/LICENSE)
