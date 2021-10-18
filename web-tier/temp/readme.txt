@@ -1,0 +1,1 @@
+This folder stores residual shapefile data during application runtime.
