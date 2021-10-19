@@ -28,6 +28,8 @@ Using data analytics, the ASU CIC will produce SmartBeats, a cloud-based softwar
 
 ## Architecture Diagram
 
+![architecture-diagram](web-tier/beats/static/beats/img/arch_demo_final.png)
+
 ## Functionality
 
 The functionality of Smartbeats is divided into two services:
