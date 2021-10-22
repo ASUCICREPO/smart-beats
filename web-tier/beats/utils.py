@@ -136,7 +136,8 @@ def get_filtered_crime_geo_dataframe(payload, city_obj):
 
     # Fixing city shapefile before join
     city_polygons = gpd.read_file(city_obj.city_shapefile)
-    city_polygons.crs = 'epsg:4326'
+    # city_polygons.crs = 'epsg:4326'
+    city_polygons.to_crs(4326, inplace=True)
     city_polygons = city_polygons[['geometry']]
 
     logger.info(f"City shapefile:\n {city_polygons.head()}")
