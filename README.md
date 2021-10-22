@@ -92,13 +92,45 @@ We have used the following technologies to develop the application:
 8. Color coding beats based on incident resolution data.
 9. Use information such as phone calls, traffic data and CCTV footage to analyze and generate better beats.
 
-<!-- # Installation Guide
-## Web-Tier
+# Deployment Guide
+1. [Application server installation guide](https://github.com/ASUCICREPO/smart-beats/blob/master/app-tier/README.md)
+2. [Web server installation guide]([./web-tier/README.md](https://github.com/ASUCICREPO/smart-beats/blob/master/web-tier/README.md))
+
 
 # How to use
+1. Home page
+    
+    ![](./images/2021-10-21-23-02-57.png)
 
+2. Click on **New Beats Generation** on home page to upload new city shapefile and crime data
+ 
+    ![](./images/2021-10-21-23-03-21.png)
 
-# Credits -->
+3. Click on **Utilize Existing Data** on home page to go to generate beats page
+
+4. Fill in the parameters to create beats and click on Generate
+   
+    ![](./images/2021-10-21-23-07-20.png)
+
+5. Get a fully responsive dynamic Beats map as result
+   
+    ![](./images/2021-10-21-23-06-36.png)
+
+# Credits
+
+"Smartbeats" is an open source software. The following people have contributed to this project.
+
+**Developers:**  
+[Risabh Raj](https://www.linkedin.com/in/risabh-raj/)  
+[Sameet Kumar](#)
+
+**UI Designer:**  
+[Sarah Vue](#)
+
+**Program Manager:**  
+[Jubleen Vilku](#)
+
+This project was designed and developed with guidance from the [ASU Cloud Innovation Center](https://smartchallenges.asu.edu/) teams. 
 
 # License
 This project is distributed under the [Apache License 2.0](https://github.com/ASUCICREPO/smart-beats/blob/master/LICENSE)
