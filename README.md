@@ -155,15 +155,15 @@ We have used the following technologies to develop the application:
 
 **Developers:**  
 [Risabh Raj](https://www.linkedin.com/in/risabh-raj/)  
-[Sameet Kumar](#)
+[Sameet Kumar](https://www.linkedin.com/in/sameethkrishna/)
 
-**UI Designer:** [Sarah Vue](#)
+**UI Designer:** [Sarah Vue](https://www.linkedin.com/in/sarahvue/)
 
-**Program Manager, AWS:**  [Jubleen Vilku](#)
+**Sr. Program Manager, AWS:**  [Jubleen Vilku](https://www.linkedin.com/in/jubleen-vilku/)
 
-**Digital Innovation Lead, AWS:** [Jason Whittet](#)
+**Digital Innovation Lead, AWS:** [Jason Whittet](https://www.linkedin.com/in/jasonwhittet/)
 
-**General Manager, ASU:** [Ryan Hendrix](#)
+**General Manager, ASU:** [Ryan Hendrix](https://www.linkedin.com/in/ryanahendrix/)
 
 
 This project was designed and developed with guidance and support from the [ASU Cloud Innovation Center](https://smartchallenges.asu.edu/) and the [City of Glendale, Arizona](https://www.glendaleaz.com/) teams. 
