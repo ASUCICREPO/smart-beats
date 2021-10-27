@@ -13,7 +13,7 @@
 
 
 # Overview
-The Arizona State University Smart City Cloud Innovation Center Powered by AWS (ASU CIC) recently collaborated with the City of Glendale, Arizona to improve the process for designing and maintaining patrol areas.
+The [Arizona State University Smart City Cloud Innovation Center Powered by AWS](https://smartchallenges.asu.edu/) (ASU CIC) recently collaborated with the [City of Glendale, Arizona](https://www.glendaleaz.com/) to improve the process for designing and maintaining patrol areas.
 
 
 Glendale aims to be able to provide a safe and timely response to calls for service. Today this process is done manually and relies on the personal knowledge of those who make the schedule and can be time consuming if an officer must take a sudden leave of absence and the scheduler must make several calls in order to find a replacement. This process can evolve with SmartBeats, a cloud-based service that can assist in scheduling police patrol areas.
@@ -41,13 +41,21 @@ Smartbeats require two input files to generate beats:
 
 
 ### 2. Spatial Data Processing Service
-User can generate beats using a variety of different parameter options:
-1. Beat creation criteria
+The user can generate beats by utilizing the following filtering options:
+
+1. Beat creation criteria:
+    1. Calls For Service: Specify the approximate count of Calls-for-service (911 calls) per beat
+    2. Number of Beats: Specify the exact number of beats to divide the city into
+
 2. Type of data to use (Calls-for-service/Incident data)
-3. Priority
-4. Disposition type
-5. Start date and time
-6. End date and time
+   1. Calls-For-Service data: 911 call received by the Police Department. Utilize all Calls-For-Service data to generate beats.
+   2. Incident data only: Subset of Calls-For-Service data (911 calls) that end up getting registered is called an incident. Utilize incident data to generate beats.
+3. Priority: Every Call-For-Service has an associated priority within range [Highest Priority=1, Lowest Priority=9].
+    > User can configure prioriy values in `settings.py` config file of web-tier.
+4. Dispositions: Disposition is the final status of the call
+    > User can configure Disposition values in `settings.py` config file of web-tier
+5. Start date and time: Specify starting date and time
+6. End date and time: Specify ending date and time
 
 
 ## Technologies
@@ -75,10 +83,18 @@ We have used the following technologies to develop the application:
 
 
 ## Assumptions
-1. We have provided the sample [Crime csv](https://github.com/ASUCICREPO/smart-beats/blob/master/web-tier/beats/static/beats/example.csv) file that is required to generate beats. We are expecting the input file to be in the exact format.
-2. Our application will not perform Geo-coding (the process of converting addresses into geographic coordinates). It has to be done on user end to create Crime csv file.
-3. We are using ArcGIS Pro: buildBalancedZones() API in the backend. The user must have an active ArcGIS Pro subscription in the application server.
-4. All spatial components (Geometry) like Points and Polygons in the input files (City shapefile + Crime csv) must have `epsg:4326`
+1. We have provided the sample [Crime csv](https://github.com/ASUCICREPO/smart-beats/blob/master/web-tier/beats/static/beats/example.csv) file that is required to generate beats. We are expecting the input file to be in the exact format and contain following columns:
+   1. `event_number`:  Call-For-Service ID. **Note: Every value must be unique**
+   2. `priority`: Every Call-For-Service has an associated priority within range [Highest Priority=1, Lowest Priority=9]
+   3. `address`: Address from where Call-For-Service was recieved
+   4. `is_incident`: Was the Call-For-Service registered as an incident or not
+   5. `geometry_wkt`: Point Geometry coordiante of Call-For-Service
+   6. `timestamp`: Timestamp when Call-For-Service was recorded
+   7. `disposiiton`: The final status of Call-For-Service
+2. The Crime csv and the City shapefile must belong to the same city.
+3. Our application will not perform Geo-coding (the process of converting addresses into geographic coordinates). It has to be done on user end to create Crime csv file.
+4. We are using ArcGIS Pro: buildBalancedZones() API in the backend. The user must have an active ArcGIS Pro subscription in the application server.
+5. All spatial components (Geometry) like Points and Polygons in the input files (City shapefile + Crime csv) must have `epsg:4326`
 
 
 ## Future Enhancements
@@ -106,10 +122,27 @@ We have used the following technologies to develop the application:
  
     ![](./images/2021-10-21-23-03-21.png)
 
-3. Click on **Utilize Existing Data** on home page to go to generate beats page
+3. Click on **Utilize Existing Data** on home page to generate beats from previously uploaded data
 
 4. Fill in the parameters to create beats and click on Generate
-   
+
+   1. **Select how beats are created**
+       1. **Calls For Service**: Specify the approximate count of Calls-for-service (911 calls) per beat
+       2. **Number of Beats**: Specify the exact number of beats to divide the city into
+
+   2. **Specify type of data to display**
+      1. **Calls-For-Service data**: 911 call received by the Police Department. Utilize all Calls-For-Service data to generate beats.
+      2. **Incident data only**: Subset of Calls-For-Service data (911 calls) that end up getting registered is called an incident. Utilize incident data to generate beats.
+   3. **Select Priority**  
+        Every Call-For-Service has an associated priority within range [Highest Priority=1, Lowest Priority=9].
+   4. **Select dispositions**  
+    Disposition is the final status of the call
+   5. **Select a starting datetime**  
+      Specify starting date and time
+   6. **Select an ending datetime**  
+      Specify ending date and time
+
+
     ![](./images/2021-10-21-23-07-20.png)
 
 5. Get a fully responsive dynamic Beats map as result
@@ -124,13 +157,16 @@ We have used the following technologies to develop the application:
 [Risabh Raj](https://www.linkedin.com/in/risabh-raj/)  
 [Sameet Kumar](#)
 
-**UI Designer:**  
-[Sarah Vue](#)
+**UI Designer:** [Sarah Vue](#)
 
-**Program Manager:**  
-[Jubleen Vilku](#)
+**Program Manager, AWS:**  [Jubleen Vilku](#)
 
-This project was designed and developed with guidance from the [ASU Cloud Innovation Center](https://smartchallenges.asu.edu/) teams. 
+**Digital Innovation Lead, AWS:** [Jason Whittet](#)
+
+**General Manager, ASU:** [Ryan Hendrix](#)
+
+
+This project was designed and developed with guidance and support from the [ASU Cloud Innovation Center](https://smartchallenges.asu.edu/) and the [City of Glendale, Arizona](https://www.glendaleaz.com/) teams. 
 
 # License
 This project is distributed under the [Apache License 2.0](https://github.com/ASUCICREPO/smart-beats/blob/master/LICENSE)
