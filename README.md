@@ -51,7 +51,7 @@ The user can generate beats by utilizing the following filtering options:
    1. Calls-For-Service data: 911 call received by the Police Department. Utilize all Calls-For-Service data to generate beats.
    2. Incident data only: Subset of Calls-For-Service data (911 calls) that end up getting registered is called an incident. Utilize incident data to generate beats.
 3. Priority: Every Call-For-Service has an associated priority within range [Highest Priority=1, Lowest Priority=9].
-    > User can configure prioriy values in `settings.py` config file of web-tier.
+    > User can configure priority values in `settings.py` config file of web-tier.
 4. Dispositions: Disposition is the final status of the call
     > User can configure Disposition values in `settings.py` config file of web-tier
 5. Start date and time: Specify starting date and time
@@ -166,7 +166,7 @@ We have used the following technologies to develop the application:
 **General Manager, ASU:** [Ryan Hendrix](https://www.linkedin.com/in/ryanahendrix/)
 
 
-This project was designed and developed with guidance and support from the [ASU Cloud Innovation Center](https://smartchallenges.asu.edu/) and the [City of Glendale, Arizona](https://www.glendaleaz.com/) teams. 
+This project is designed and developed with guidance and support from the [ASU Cloud Innovation Center](https://smartchallenges.asu.edu/) and the [City of Glendale, Arizona](https://www.glendaleaz.com/) teams. 
 
 # License
 This project is distributed under the [Apache License 2.0](https://github.com/ASUCICREPO/smart-beats/blob/master/LICENSE)
