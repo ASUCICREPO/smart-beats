@@ -79,16 +79,16 @@ We have used the following technologies to develop the application:
 4. [Amazon EC2](https://aws.amazon.com/ec2/): Windows EC2 to host ArcGIS Pro and deploy App server
 
 ## Challenges
-1. Smartbeats uses [BuildBalancedZones()](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/learnmore-buildbalancedzones.htm) API of ArcGIS Pro to divide a city into zones(beats) based on the beat creation criteria provided by the user. Since **BuildBalancedZones()** uses genetic algorithm for spatial optimization, it is not guaranteed to reach a perfect solution i.e. getting the exact number of beats. To solve this issue, we developed a calibrator that recursively increments the zones count until the target zones count is achieved. The user can specify the iteration count in the `app-tier` [config file](https://github.com/ASUCICREPO/smart-beats/blob/master/app-tier/settings.py). The default value is 20.
+Smartbeats uses [BuildBalancedZones()](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/learnmore-buildbalancedzones.htm) API of ArcGIS Pro to divide a city into zones(beats) based on the beat creation criteria provided by the user. Since **BuildBalancedZones()** uses genetic algorithm for spatial optimization, it is not guaranteed to reach a perfect solution i.e. getting the exact number of beats. To solve this issue, we developed a calibrator that recursively increments the zones count until the target zones count is achieved. The user can specify the iteration count in the `app-tier` [config file](https://github.com/ASUCICREPO/smart-beats/blob/master/app-tier/settings.py). The default value is 20.
 
 ```
 BEATS_COUNT_CALIBRATOR_TRIALS = 20
 ```
 
 
-
 ## Assumptions
-1. We have provided the sample [Crime csv](https://github.com/ASUCICREPO/smart-beats/blob/master/web-tier/beats/static/beats/example.csv) file that is required to generate beats. We are expecting the input file to be in the exact format and contain following columns:
+1. The early versions of Smartbeats also supported Geocoding: the process of converting addresses (like a street address) into geographic coordinates (like latitude and longitude). But this functionality is removed from the final prototype on account of Geocoding APIs being very costly. So, we are expecting Crime csv data to have geographic addresses converted to lat-long `geometry_wkt` format
+2. We have provided the sample [Crime csv](https://github.com/ASUCICREPO/smart-beats/blob/master/web-tier/beats/static/beats/example.csv) file that is required to generate beats. We are expecting the input file to be in the exact format and contain following columns:
    1. `event_number`:  Call-For-Service ID. **Note: Every value must be unique**
    2. `priority`: Every Call-For-Service has an associated priority within range [Highest Priority=1, Lowest Priority=9]
    3. `address`: Address from where Call-For-Service was recieved
@@ -96,10 +96,10 @@ BEATS_COUNT_CALIBRATOR_TRIALS = 20
    5. `geometry_wkt`: Point Geometry coordiante of Call-For-Service
    6. `timestamp`: Timestamp when Call-For-Service was recorded
    7. `disposiiton`: The final status of Call-For-Service
-2. The Crime csv and the City shapefile must belong to the same city.
-3. Our application will not perform Geo-coding (the process of converting addresses into geographic coordinates). It has to be done on user end to create Crime csv file.
-4. We are using ArcGIS Pro: buildBalancedZones() API in the backend. The user must have an active ArcGIS Pro subscription in the application server.
-5. All spatial components (Geometry) like Points and Polygons in the input files (City shapefile + Crime csv) must have `epsg:4326`
+3. The Crime csv and the City shapefile must belong to the same city
+4. Our application will not perform Geo-coding (the process of converting addresses into geographic coordinates). It has to be done on user end to create Crime csv file
+5. We are using ArcGIS Pro: buildBalancedZones() API in the backend. The user must have an active ArcGIS Pro subscription in the application server
+6. All spatial components (Geometry) like Points and Polygons in the input files (City shapefile + Crime csv) must have `epsg:4326`
 
 
 ## Future Enhancements
