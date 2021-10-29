@@ -109,8 +109,10 @@ We have used the following technologies to develop the application:
 9. Use information such as phone calls, traffic data and CCTV footage to analyze and generate better beats.
 
 # Deployment Guide
-1. [Application server installation guide](https://github.com/ASUCICREPO/smart-beats/blob/master/app-tier/README.md)
+1. [AWS services installation guide](https://github.com/ASUCICREPO/smart-beats/blob/master/AWS_Services.md)
 2. [Web server installation guide]([./web-tier/README.md](https://github.com/ASUCICREPO/smart-beats/blob/master/web-tier/README.md))
+3. [Application server installation guide](https://github.com/ASUCICREPO/smart-beats/blob/master/app-tier/README.md)
+
 
 
 # How to use
