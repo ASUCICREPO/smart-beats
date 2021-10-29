@@ -5,7 +5,7 @@
 |:----------------|:-----------|
 | [Overview](#overview)         |     See the motivation behind this project.    | 
 | [Description](#description)         |     Learn more about the problem, implemented solution and challenges faced.    | 
-| [Installation Guide](#installation-guide)         |    How to install Smartbeats architecture. |
+| [Deployment Guide](#deployment-guide)         |    How to install Smartbeats architecture. |
 | [How to Use](#how-to-use)       |     Instructions to use Smartbeats.   |
 | [Credits](#credits)      |     Meet the team behind this.     |
 | [License](#license)      |     License details.     |

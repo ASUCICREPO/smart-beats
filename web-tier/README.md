@@ -1,9 +1,10 @@
-# Installation Guide
+# Web-tier Installation Guide
+> Web-tier is developed using Python + [Django](https://www.djangoproject.com/) Framework
 
 ## Prerequisites
 * A Unix-like (macOS, Linux, BSD) or Windows operating system with a command line terminal and `git` installed
 * Python-3 should be installed
-* Existing Database tables and S3 buckets in AWS. Refer [AWS Services guide]([../../smart-beats/AWS_Services.md](https://github.com/ASUCICREPO/smart-beats/blob/master/AWS_Services.md)).
+* Existing Database tables and S3 buckets in AWS. Refer [AWS Services guide](https://github.com/ASUCICREPO/smart-beats/blob/master/AWS_Services.md).
 
 ## Basic Installation
 1. Smartbeats repository contains the codebase of both web and app tiers
@@ -26,7 +27,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-6. Update configuration file `./smartbeats/settings.py`. The User specified configuration settings section is in the following format:
+6. Update configuration file `./smartbeats/settings.py`. Refer [AWS Services guide](https://github.com/ASUCICREPO/smart-beats/blob/master/AWS_Services.md) for AWS configurations. The User specified configuration section is in the following format:
 ```python
 # ========================= User specified application settings: START ========================= #
 # City table
