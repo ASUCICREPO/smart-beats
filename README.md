@@ -78,8 +78,13 @@ We have used the following technologies to develop the application:
 3. [ArcGIS Pro](https://pro.arcgis.com/en/pro-app/latest/get-started/get-started.htm): Spatial data processing
 4. [Amazon EC2](https://aws.amazon.com/ec2/): Windows EC2 to host ArcGIS Pro and deploy App server
 
-<!-- ## Challenges
-1. To generate the exact  -->
+## Challenges
+1. Smartbeats uses [BuildBalancedZones()](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/learnmore-buildbalancedzones.htm) API of ArcGIS Pro to divide a city into zones(beats) based on the beat creation criteria provided by the user. Since **BuildBalancedZones()** uses genetic algorithm for spatial optimization, it is not guaranteed to reach a perfect solution i.e. getting the exact number of beats. To solve this issue, we developed a calibrator that recursively increments the zones count until the target zones count is achieved. The user can specify the iteration count in the `app-tier` [config file](https://github.com/ASUCICREPO/smart-beats/blob/master/app-tier/settings.py). The default value is 20.
+
+```
+BEATS_COUNT_CALIBRATOR_TRIALS = 20
+```
+
 
 
 ## Assumptions
@@ -110,7 +115,7 @@ We have used the following technologies to develop the application:
 
 # Deployment Guide
 1. [AWS services installation guide](https://github.com/ASUCICREPO/smart-beats/blob/master/AWS_Services.md)
-2. [Web server installation guide]([./web-tier/README.md](https://github.com/ASUCICREPO/smart-beats/blob/master/web-tier/README.md))
+2. [Web server installation guide](https://github.com/ASUCICREPO/smart-beats/blob/master/web-tier/README.md)
 3. [Application server installation guide](https://github.com/ASUCICREPO/smart-beats/blob/master/app-tier/README.md)
 
 

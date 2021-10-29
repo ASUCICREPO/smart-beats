@@ -4,9 +4,8 @@
 ## Prerequisites
 1. A Windows operating system with a command line terminal and `git` installed
 > App-tier is dependent upon ArcGis Pro. For development purpose
-2. [ArcGis Pro](https://pro.arcgis.com/en/pro-app/latest/get-started/get-started.htm) subscription
-3. Python-3 + Miniconda should be installed
-4. 
+1. [ArcGis Pro](https://pro.arcgis.com/en/pro-app/latest/get-started/get-started.htm) installed with [subscription](https://www.esri.com/en-us/arcgis/products/arcgis-pro/buy)
+2. Python-3 + Miniconda should be installed
 
 
 ## Basic Installation
@@ -34,6 +33,9 @@ pip install -r requirements.txt
 output_s3_bucket_name = os.environ['smartbeats-main-bucket']
 s3_beats_dir_name = os.environ['beat_shapefiles_dir']
 s3_polygon_wise_count_shapefile = os.environ['polygon_wise_count_shapefiles_dir']
+
+# Specify the path to ArcGIS workspace
+ARCGIS_WORKSPACE = 'arcgis-workspace/arcgis-workspace.gdb'
 ```
 
 1. Run the server
