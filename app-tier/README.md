@@ -27,13 +27,16 @@ pip install -r requirements.txt
 ```
 
 6. Update configuration file `./settings.py` with S3 bucket names created in [AWS services installation](https://github.com/ASUCICREPO/smart-beats/blob/master/AWS_Services.md) step.
+
+> You can add your AWS credentials as environment variables (inside `.bashrc`) and load them using `os.environ['property']` in the config file 
+
 ```
 output_s3_bucket_name = os.environ['smartbeats-main-bucket']
 s3_beats_dir_name = os.environ['beat_shapefiles_dir']
 s3_polygon_wise_count_shapefile = os.environ['polygon_wise_count_shapefiles_dir']
 ```
 
-7. Run the server
+1. Run the server
 ```
 python app.py
 ```
