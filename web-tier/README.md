@@ -27,11 +27,11 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-1. Update configuration file `./smartbeats/settings.py`. Refer [AWS Services guide](https://github.com/ASUCICREPO/smart-beats/blob/master/AWS_Services.md) for AWS configurations. 
+6. Update configuration file `./smartbeats/settings.py`. Refer [AWS Services guide](https://github.com/ASUCICREPO/smart-beats/blob/master/AWS_Services.md) for AWS configurations. 
 
 > You can add your AWS credentials as environment variables (inside `.bashrc`) and load them using `os.environ['property']` in the config file 
 
-1. The User specified configuration section is in the following format:
+The User specified configuration section is in the following format:
 ```python
 # ========================= User specified application settings: START ========================= #
 # City table

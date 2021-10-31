@@ -4,8 +4,8 @@
 ## Prerequisites
 1. A Windows operating system with a command line terminal and `git` installed
 > App-tier is dependent upon ArcGis Pro. For development purpose
-1. [ArcGis Pro](https://pro.arcgis.com/en/pro-app/latest/get-started/get-started.htm) installed with [subscription](https://www.esri.com/en-us/arcgis/products/arcgis-pro/buy)
-2. Python-3 + Miniconda should be installed
+2. [ArcGis Pro](https://pro.arcgis.com/en/pro-app/latest/get-started/get-started.htm) installed with [subscription](https://www.esri.com/en-us/arcgis/products/arcgis-pro/buy)
+3. Python-3 + Miniconda should be installed
 
 
 ## Basic Installation
@@ -38,7 +38,7 @@ s3_polygon_wise_count_shapefile = os.environ['polygon_wise_count_shapefiles_dir'
 ARCGIS_WORKSPACE = 'arcgis-workspace/arcgis-workspace.gdb'
 ```
 
-1. Run the server
+7. Run the server
 ```
 python app.py
 ```
